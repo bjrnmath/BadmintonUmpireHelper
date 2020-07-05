@@ -1,13 +1,14 @@
 package com.example.badmintonumpirestandalone
 
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.example.badmintonumpirestandalone.model.DoubleMatch
 import com.example.badmintonumpirestandalone.model.SingleMatch
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_serve.*
+import java.io.File
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,6 +17,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+//        val files: Array<File> = filesDir.listFiles()
+//        if (files.isEmpty()) {
+//
+//        }
+//        vsText.text = files.contentToString()
+
         single_double.setOnClickListener {
             single = !single
             player2.isVisible = !single
