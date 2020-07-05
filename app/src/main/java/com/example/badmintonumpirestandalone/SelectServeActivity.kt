@@ -1,15 +1,13 @@
 package com.example.badmintonumpirestandalone
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.example.badmintonumpirestandalone.model.*
 import kotlinx.android.synthetic.main.activity_serve.*
-import java.io.Serializable
 import java.util.*
 
 // TODO do some refactoring on this file
@@ -278,7 +276,10 @@ class SelectServeActivity : AppCompatActivity() {
     }
 
     private fun makeTeamAServeAcceptInvisible() {
-        if (teamAPlayer1Serve.isVisible && teamAPlayer1Accept.isVisible) {
+        // if everything is still visible we are in a double match and A made the choice to either serve or
+        // accept, so it cannot make any other choice, otherwise we just make the serve/accept choice invisible
+        if (teamAPlayer1Serve.isVisible && teamAPlayer1Accept.isVisible &&
+            teamAPlayer2Serve.isVisible && teamAPlayer2Accept.isVisible) {
             makeTeamAInvisible()
         } else {
             teamAPlayer1Serve.visibility = Button.INVISIBLE
@@ -308,7 +309,10 @@ class SelectServeActivity : AppCompatActivity() {
     }
 
     private fun makeTeamBServeAcceptInvisible() {
-        if (teamBPlayer1Serve.isVisible && teamBPlayer1Accept.isVisible) {
+        // if everything is still visible we are in a double match and B made the choice to either serve or
+        // accept, so it cannot make any other choice, otherwise we just make the serve/accept choice invisible
+        if (teamBPlayer1Serve.isVisible && teamBPlayer1Accept.isVisible &&
+            teamBPlayer2Serve.isVisible && teamBPlayer2Accept.isVisible) {
             makeTeamBInvisible()
         } else {
             teamBPlayer1Serve.visibility = Button.INVISIBLE
@@ -356,7 +360,7 @@ class SelectServeActivity : AppCompatActivity() {
     /**
      * Sets the visibility and text for the select buttons and text views.
      */
-    fun showSelectSingle(match: Match) {
+    private fun showSelectSingle(match: Match) {
         serveTeamAPlayer1.text = match.playerTeamA[0]
         serveTeamBPlayer1.text = match.playerTeamB[0]
         teamASide.text = match.printTeamA()
@@ -370,7 +374,7 @@ class SelectServeActivity : AppCompatActivity() {
     /**
      * Sets the visibility and text for the choose buttons and removes the winner buttons.
      */
-    fun showSelectDouble(match: Match) {
+    private fun showSelectDouble(match: Match) {
         serveTeamAPlayer2.text = match.playerTeamA[1]
         serveTeamBPlayer2.text = match.playerTeamB[1]
         selectTextViewsDouble.forEach {

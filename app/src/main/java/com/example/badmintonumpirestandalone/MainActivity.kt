@@ -1,6 +1,5 @@
 package com.example.badmintonumpirestandalone
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -8,11 +7,10 @@ import androidx.core.view.isVisible
 import com.example.badmintonumpirestandalone.model.DoubleMatch
 import com.example.badmintonumpirestandalone.model.SingleMatch
 import kotlinx.android.synthetic.main.activity_main.*
-import java.io.File
 
 class MainActivity : AppCompatActivity() {
 
-    var single = true
+    private var single = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

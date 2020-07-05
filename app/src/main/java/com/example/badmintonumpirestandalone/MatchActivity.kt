@@ -1,16 +1,10 @@
 package com.example.badmintonumpirestandalone
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
-import com.example.badmintonumpirestandalone.model.DoubleMatch
 import com.example.badmintonumpirestandalone.model.Match
 import com.example.badmintonumpirestandalone.model.SingleMatch
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_match.*
-import java.io.File
 
 class MatchActivity : AppCompatActivity() {
 
