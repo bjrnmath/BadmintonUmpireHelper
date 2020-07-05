@@ -1,5 +1,6 @@
 package com.example.badmintonumpirestandalone
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,8 @@ import com.example.badmintonumpirestandalone.model.*
 import kotlinx.android.synthetic.main.activity_serve.*
 import java.io.Serializable
 import java.util.*
+
+// TODO do some refactoring on this file
 
 enum class Side {
     LEFT,
@@ -253,7 +256,10 @@ class SelectServeActivity : AppCompatActivity() {
                     if (sideTeamA == Side.RIGHT) match.playerTeamB else match.playerTeamA
                 )
             )
-            Log.d("DEBUG BUS", match.toString())
+            val intent = Intent(this, MatchActivity::class.java).apply {
+                putExtra("match", match)
+            }
+            startActivity(intent)
         }
     }
 
