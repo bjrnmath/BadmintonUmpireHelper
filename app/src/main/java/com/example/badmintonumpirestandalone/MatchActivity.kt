@@ -16,10 +16,21 @@ class MatchActivity : AppCompatActivity() {
         if (match is Match) {
             if (match is SingleMatch) {
                 start_match_text.text = match.printStartWording(resources.getString(R.string.match_start_wording_single_non_team))
+
+                drawPlayerNames(match)
             } else {
                 start_match_text.text = match.printStartWording(resources.getString(R.string.match_start_wording_double_non_team))
+
+                drawPlayerNames(match)
             }
         }
+    }
+
+    private fun drawPlayerNames(match: Match) {
+        player_left_even.text = match getPlayer match.currentSet().player_left_even
+        player_left_uneven.text = match getPlayer match.currentSet().player_left_uneven
+        player_right_even.text = match getPlayer match.currentSet().player_right_even
+        player_right_uneven.text = match getPlayer match.currentSet().player_right_uneven
     }
 
 }

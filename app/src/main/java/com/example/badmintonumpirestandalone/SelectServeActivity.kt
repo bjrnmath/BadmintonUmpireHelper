@@ -247,12 +247,7 @@ class SelectServeActivity : AppCompatActivity() {
     private fun checkReady(serve: PlayerIDs, accept: PlayerIDs, sideTeamA: Side, match: Match) {
         if (serve != PlayerIDs.UNDEF && accept != PlayerIDs.UNDEF && sideTeamA != Side.UNDEF) {
             match.sets.add(
-                MatchSet(
-                    serve,
-                    accept,
-                    if (sideTeamA == Side.RIGHT) match.playerTeamA else match.playerTeamB,
-                    if (sideTeamA == Side.RIGHT) match.playerTeamB else match.playerTeamA
-                )
+                MatchSet(match, serve, accept, sideTeamA == Side.RIGHT)
             )
             val intent = Intent(this, MatchActivity::class.java).apply {
                 putExtra("match", match)

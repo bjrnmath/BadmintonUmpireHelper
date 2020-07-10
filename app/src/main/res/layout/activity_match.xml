@@ -14,5 +14,175 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.050000012"/>
+    <View
+            android:id="@+id/court_top"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="#000000"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="20dp" android:layout_marginStart="20dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp" android:layout_marginTop="10dp" app:layout_constraintTop_toTopOf="@id/net"
+    />
+    <View
+            android:id="@+id/court_top2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="#000000"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="20dp" android:layout_marginStart="20dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp" android:layout_marginTop="30dp" app:layout_constraintTop_toTopOf="@id/net"
+    />
+    <View
+            android:id="@+id/court_left_center"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="#000000"
+            app:layout_constraintTop_toBottomOf="@+id/court_left"
+            app:layout_constraintBottom_toTopOf="@+id/court_left"
+            app:layout_constraintStart_toStartOf="@id/court_left" app:layout_constraintEnd_toEndOf="@id/court_left3"/>
+    <View
+            android:id="@+id/court_right_center"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="#000000"
+            app:layout_constraintTop_toBottomOf="@id/court_bottom"
+            app:layout_constraintBottom_toTopOf="@id/court_top" app:layout_constraintStart_toEndOf="@+id/court_right3"
+            app:layout_constraintEnd_toEndOf="@id/court_right"/>
+    <View
+            android:id="@+id/court_bottom"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="#000000"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="20dp" android:layout_marginStart="20dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintHorizontal_bias="0.0" android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toBottomOf="@id/net"/>
+    <View
+            android:id="@+id/court_bottom2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="#000000"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="20dp" android:layout_marginStart="20dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintHorizontal_bias="0.0" android:layout_marginBottom="30dp"
+            app:layout_constraintBottom_toBottomOf="@id/net"/>
+    <View
+            android:id="@+id/court_left"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="#000000"
+            app:layout_constraintTop_toBottomOf="@+id/court_top"
+            app:layout_constraintBottom_toBottomOf="@id/court_bottom"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"/>
+    <View
+            android:id="@+id/court_left2"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="#000000"
+            app:layout_constraintTop_toBottomOf="@+id/court_top"
+            app:layout_constraintBottom_toBottomOf="@id/court_bottom"
+            app:layout_constraintStart_toEndOf="@+id/court_left" android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"/>
+    <View
+            android:id="@+id/court_left3"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="#000000"
+            app:layout_constraintTop_toBottomOf="@+id/court_top"
+            app:layout_constraintBottom_toBottomOf="@id/court_bottom"
+            app:layout_constraintEnd_toStartOf="@+id/net" android:layout_marginEnd="80dp"
+            android:layout_marginRight="80dp"/>
+    <View
+            android:id="@+id/net"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="#000000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/court_left" app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toStartOf="@+id/court_right"
+            android:layout_marginBottom="100dp" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="80dp"/>
+    <View
+            android:id="@+id/court_right"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="#000000"
+            app:layout_constraintTop_toBottomOf="@+id/court_top"
+            app:layout_constraintBottom_toBottomOf="@id/court_bottom"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"/>
+    <View
+            android:id="@+id/court_right2"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="#000000"
+            app:layout_constraintTop_toBottomOf="@+id/court_top"
+            app:layout_constraintBottom_toBottomOf="@id/court_bottom"
+            app:layout_constraintVertical_bias="1.0" app:layout_constraintEnd_toStartOf="@+id/court_right"
+            android:layout_marginRight="30dp" android:layout_marginEnd="30dp"/>
+    <View
+            android:id="@+id/court_right3"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:background="#000000"
+            app:layout_constraintTop_toBottomOf="@+id/court_top"
+            app:layout_constraintBottom_toBottomOf="@id/court_bottom"
+            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/net" android:layout_marginLeft="80dp"
+            android:layout_marginStart="80dp"/>
+    <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/player_left_uneven"
+            app:layout_constraintStart_toEndOf="@+id/court_left2" app:layout_constraintTop_toBottomOf="@+id/court_top2"
+            app:layout_constraintBottom_toTopOf="@+id/court_left_center" android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"/>
+    <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/player_right_even"
+            app:layout_constraintTop_toBottomOf="@+id/court_top2"
+            app:layout_constraintBottom_toTopOf="@id/court_right_center"
+            app:layout_constraintVertical_bias="0.512" app:layout_constraintEnd_toStartOf="@+id/court_right2"
+            android:layout_marginRight="10dp" android:layout_marginEnd="10dp"/>
+    <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/player_right_uneven"
+            app:layout_constraintEnd_toStartOf="@+id/court_right2"
+            app:layout_constraintTop_toBottomOf="@+id/court_right_center"
+            app:layout_constraintBottom_toTopOf="@+id/court_bottom2" android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"/>
+    <TextView
+            android:text="TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/player_left_even"
+            app:layout_constraintStart_toEndOf="@+id/court_left2"
+            app:layout_constraintTop_toBottomOf="@+id/court_left_center"
+            app:layout_constraintBottom_toTopOf="@+id/court_bottom2" android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"/>
+    <Button
+            android:text="@string/plus_one"
+            android:layout_width="100dp"
+            android:layout_height="100dp" android:id="@+id/point_left"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp" app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="10dp" android:textSize="30sp" android:textStyle="bold"/>
+    <Button
+            android:text="@string/plus_one"
+            android:layout_width="100dp"
+            android:layout_height="100dp" android:id="@+id/point_right"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="10dp" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginRight="10dp" android:layout_marginEnd="10dp" android:textSize="30sp"
+            android:textStyle="bold"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

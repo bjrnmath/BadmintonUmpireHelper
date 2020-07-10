@@ -23,4 +23,5 @@
         %s schlägt auf zu %s. Null beide.
         Bitte spielen.
     </string>
+    <string name="plus_one">+1</string>
 </resources>
