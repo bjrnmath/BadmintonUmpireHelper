@@ -8,7 +8,7 @@ data class SetPoint(val pointA: Int, val pointB: Int, val serve: PlayerIDs, val 
 class MatchSet( private val match: Match,
                 serve: PlayerIDs,
                 accept: PlayerIDs,
-                private val teamARight: Boolean
+                val teamARight: Boolean
 ): Serializable {
 
     var playerLeftEven = if (!teamARight && match.isTeamA(serve)) serve else accept
@@ -21,10 +21,10 @@ class MatchSet( private val match: Match,
     val SETEND = 21 // Number of points needed to win the set
     val MAXPOINTS = 30 // Maximal number of points per set
 
-    private fun getCurrentPointsLeft() = if (teamARight) points.last().pointB else points.last().pointA
-    private fun getCurrentPointsRight() = if (teamARight) points.last().pointA else points.last().pointB
-    private fun isServeLeft(currentSetPoint: SetPoint) =
-        (match.isTeamA(currentSetPoint.serve) && !teamARight) || (!match.isTeamA(currentSetPoint.serve) && teamARight)
+    fun getCurrentPointsLeft() = if (teamARight) points.last().pointB else points.last().pointA
+    fun getCurrentPointsRight() = if (teamARight) points.last().pointA else points.last().pointB
+    fun isServeLeft() =
+        (match.isTeamA(points.last().serve) && !teamARight) || (!match.isTeamA(points.last().serve) && teamARight)
 
     /**
      * Returns true if the set is not finished yet, i.e. no team won by now.
@@ -36,7 +36,7 @@ class MatchSet( private val match: Match,
 
         val serve: PlayerIDs
         val accept: PlayerIDs
-        if (isServeLeft(currentSetPoint)) {
+        if (isServeLeft()) {
             switchLeft()
             serve = currentSetPoint.serve
             accept = match.getTeamMate(currentSetPoint.accept)
@@ -59,7 +59,7 @@ class MatchSet( private val match: Match,
 
         val serve: PlayerIDs
         val accept: PlayerIDs
-        if (!isServeLeft(currentSetPoint)) {
+        if (!isServeLeft()) {
             switchRight()
             serve = currentSetPoint.serve
             accept = match.getTeamMate(currentSetPoint.accept)

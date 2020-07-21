@@ -11,7 +11,9 @@
             android:theme="@style/AppTheme">
         <activity android:name=".MainActivity"
                   android:screenOrientation="sensorLandscape"
-                  android:configChanges="orientation|keyboardHidden" tools:ignore="LockedOrientationActivity">
+                  android:configChanges="orientation|keyboardHidden"
+                  tools:ignore="LockedOrientationActivity"
+                  android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -21,7 +23,9 @@
 
         <activity android:name=".SelectServeActivity"
                   android:screenOrientation="sensorLandscape"
-                  android:configChanges="orientation|keyboardHidden" tools:ignore="LockedOrientationActivity">
+                  android:configChanges="orientation|keyboardHidden"
+                  tools:ignore="LockedOrientationActivity"
+                  android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -31,7 +35,9 @@
 
         <activity android:name=".MatchActivity"
                   android:screenOrientation="sensorLandscape"
-                  android:configChanges="orientation|keyboardHidden" tools:ignore="LockedOrientationActivity">
+                  android:configChanges="orientation|keyboardHidden"
+                  tools:ignore="LockedOrientationActivity"
+                  android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

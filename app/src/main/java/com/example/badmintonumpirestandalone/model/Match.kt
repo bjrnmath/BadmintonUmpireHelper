@@ -19,12 +19,31 @@ abstract class Match(val playerTeamA: List<String>, val playerTeamB: List<String
     abstract fun printTeamB(): String
     abstract fun printStartWording(format: String): String
 
-    infix fun getPlayer(player: PlayerIDs) = when(player) {
+    infix fun getPlayerName(player: PlayerIDs) = when(player) {
         PlayerIDs.TEAMAPLAYER1 -> playerTeamA[0]
         PlayerIDs.TEAMAPLAYER2 -> if (playerTeamA.size > 1) playerTeamA[1] else ""
         PlayerIDs.TEAMBPLAYER1 -> playerTeamB[0]
         PlayerIDs.TEAMBPLAYER2 -> if (playerTeamB.size > 1) playerTeamB[1] else ""
         else -> throw IllegalStateException("Requested player is undefined.")
+    }
+
+    /**
+     * Returns true if based on the current points a next set is possible, even if the current set is not yet finished.
+     */
+    fun nextSetExists(): Boolean {
+        // either in two sets one team was winning or it is the third set
+        return !(sets.size == 2 &&
+                (sets.all { it.points.last().pointA > it.points.last().pointA} ||
+                        sets.all { it.points.last().pointB > it.points.last().pointB}) ||
+                sets.size == 3)
+    }
+
+    fun startNextSet(serve: PlayerIDs, accept: PlayerIDs) {
+        sets.add(MatchSet(this,
+            PlayerIDs.TEAMAPLAYER1,
+            PlayerIDs.TEAMBPLAYER1,
+            !sets.last().teamARight
+        ))
     }
 
     fun currentSet(): MatchSet {

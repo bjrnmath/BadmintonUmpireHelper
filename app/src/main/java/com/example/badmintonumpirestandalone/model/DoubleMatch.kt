@@ -18,12 +18,12 @@ class DoubleMatch(playerTeamA: List<String>, playerTeamB: List<String>): Match(p
         // TODO add existence checks and do proper error handling here
         val set = sets[0]
         return format.format(
-            getPlayer(set.playerRightEven),
-            getPlayer(set.playerRightUneven),
-            getPlayer(set.playerLeftEven),
-            getPlayer(set.playerLeftUneven),
-            getPlayer(set.points[0].serve),
-            getPlayer(set.points[0].accept)
+            getPlayerName(set.playerRightEven),
+            getPlayerName(set.playerRightUneven),
+            getPlayerName(set.playerLeftEven),
+            getPlayerName(set.playerLeftUneven),
+            getPlayerName(set.points[0].serve),
+            getPlayerName(set.points[0].accept)
             )
     }
 }

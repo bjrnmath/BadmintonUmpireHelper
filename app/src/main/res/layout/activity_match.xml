@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        tools:context=".MainActivity" android:background="#202020">
 
     <TextView
             android:text="@string/vs"
@@ -20,7 +20,7 @@
             android:id="@+id/court_top"
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:background="#000000"
+            android:background="#BCBCBC"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginLeft="20dp" android:layout_marginStart="20dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="20dp"
@@ -30,7 +30,7 @@
             android:id="@+id/court_top2"
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:background="#000000"
+            android:background="#BCBCBC"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginLeft="20dp" android:layout_marginStart="20dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="20dp"
@@ -40,7 +40,7 @@
             android:id="@+id/court_left_center"
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:background="#000000"
+            android:background="#BCBCBC"
             app:layout_constraintTop_toBottomOf="@+id/court_left"
             app:layout_constraintBottom_toTopOf="@+id/court_left"
             app:layout_constraintStart_toStartOf="@id/court_left" app:layout_constraintEnd_toEndOf="@id/court_left3"/>
@@ -48,7 +48,7 @@
             android:id="@+id/court_right_center"
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:background="#000000"
+            android:background="#BCBCBC"
             app:layout_constraintTop_toBottomOf="@id/court_bottom"
             app:layout_constraintBottom_toTopOf="@id/court_top" app:layout_constraintStart_toEndOf="@+id/court_right3"
             app:layout_constraintEnd_toEndOf="@id/court_right"/>
@@ -56,7 +56,7 @@
             android:id="@+id/court_bottom"
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:background="#000000"
+            android:background="#BCBCBC"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginLeft="20dp" android:layout_marginStart="20dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="20dp"
@@ -67,7 +67,7 @@
             android:id="@+id/court_bottom2"
             android:layout_width="0dp"
             android:layout_height="1dp"
-            android:background="#000000"
+            android:background="#BCBCBC"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginLeft="20dp" android:layout_marginStart="20dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="20dp"
@@ -78,7 +78,7 @@
             android:id="@+id/court_left"
             android:layout_width="1dp"
             android:layout_height="0dp"
-            android:background="#000000"
+            android:background="#BCBCBC"
             app:layout_constraintTop_toBottomOf="@+id/court_top"
             app:layout_constraintBottom_toBottomOf="@id/court_bottom"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="20dp"
@@ -87,7 +87,7 @@
             android:id="@+id/court_left2"
             android:layout_width="1dp"
             android:layout_height="0dp"
-            android:background="#000000"
+            android:background="#BCBCBC"
             app:layout_constraintTop_toBottomOf="@+id/court_top"
             app:layout_constraintBottom_toBottomOf="@id/court_bottom"
             app:layout_constraintStart_toEndOf="@+id/court_left" android:layout_marginLeft="30dp"
@@ -96,7 +96,7 @@
             android:id="@+id/court_left3"
             android:layout_width="1dp"
             android:layout_height="0dp"
-            android:background="#000000"
+            android:background="#BCBCBC"
             app:layout_constraintTop_toBottomOf="@+id/court_top"
             app:layout_constraintBottom_toBottomOf="@id/court_bottom"
             app:layout_constraintEnd_toStartOf="@+id/net" android:layout_marginEnd="80dp"
@@ -105,7 +105,7 @@
             android:id="@+id/net"
             android:layout_width="1dp"
             android:layout_height="0dp"
-            android:background="#000000"
+            android:background="#BCBCBC"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/court_left" app:layout_constraintHorizontal_bias="0.5"
@@ -116,7 +116,7 @@
             android:id="@+id/court_right"
             android:layout_width="1dp"
             android:layout_height="0dp"
-            android:background="#000000"
+            android:background="#BCBCBC"
             app:layout_constraintTop_toBottomOf="@+id/court_top"
             app:layout_constraintBottom_toBottomOf="@id/court_bottom"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="20dp"
@@ -125,7 +125,7 @@
             android:id="@+id/court_right2"
             android:layout_width="1dp"
             android:layout_height="0dp"
-            android:background="#000000"
+            android:background="#BCBCBC"
             app:layout_constraintTop_toBottomOf="@+id/court_top"
             app:layout_constraintBottom_toBottomOf="@id/court_bottom"
             app:layout_constraintVertical_bias="1.0" app:layout_constraintEnd_toStartOf="@+id/court_right"
@@ -134,7 +134,7 @@
             android:id="@+id/court_right3"
             android:layout_width="1dp"
             android:layout_height="0dp"
-            android:background="#000000"
+            android:background="#BCBCBC"
             app:layout_constraintTop_toBottomOf="@+id/court_top"
             app:layout_constraintBottom_toBottomOf="@id/court_bottom"
             app:layout_constraintVertical_bias="1.0"
@@ -146,7 +146,7 @@
             android:layout_height="wrap_content" android:id="@+id/player_left_uneven"
             app:layout_constraintStart_toEndOf="@+id/court_left2" app:layout_constraintTop_toBottomOf="@+id/court_top2"
             app:layout_constraintBottom_toTopOf="@+id/court_left_center" android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"/>
+            android:layout_marginStart="10dp" android:textColor="#BCBCBC"/>
     <TextView
             android:text="TextView"
             android:layout_width="wrap_content"
@@ -154,7 +154,7 @@
             app:layout_constraintTop_toBottomOf="@+id/court_top2"
             app:layout_constraintBottom_toTopOf="@id/court_right_center"
             app:layout_constraintVertical_bias="0.512" app:layout_constraintEnd_toStartOf="@+id/court_right2"
-            android:layout_marginRight="10dp" android:layout_marginEnd="10dp"/>
+            android:layout_marginRight="10dp" android:layout_marginEnd="10dp" android:textColor="#BCBCBC"/>
     <TextView
             android:text="TextView"
             android:layout_width="wrap_content"
@@ -162,7 +162,7 @@
             app:layout_constraintEnd_toStartOf="@+id/court_right2"
             app:layout_constraintTop_toBottomOf="@+id/court_right_center"
             app:layout_constraintBottom_toTopOf="@+id/court_bottom2" android:layout_marginRight="10dp"
-            android:layout_marginEnd="10dp"/>
+            android:layout_marginEnd="10dp" android:textColor="#BCBCBC"/>
     <TextView
             android:text="TextView"
             android:layout_width="wrap_content"
@@ -170,14 +170,15 @@
             app:layout_constraintStart_toEndOf="@+id/court_left2"
             app:layout_constraintTop_toBottomOf="@+id/court_left_center"
             app:layout_constraintBottom_toTopOf="@+id/court_bottom2" android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"/>
+            android:layout_marginStart="10dp" android:textColor="#BCBCBC"/>
     <Button
             android:text="@string/plus_one"
             android:layout_width="100dp"
             android:layout_height="100dp" android:id="@+id/point_left"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp" app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="10dp" android:textSize="30sp" android:textStyle="bold"/>
+            android:layout_marginBottom="10dp" android:textSize="30sp" android:textStyle="bold"
+            android:background="#515151" android:textColor="#BCBCBC"/>
     <Button
             android:text="@string/plus_one"
             android:layout_width="100dp"
@@ -185,7 +186,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="10dp" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginRight="10dp" android:layout_marginEnd="10dp" android:textSize="30sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" android:background="#515151" android:textColor="#BCBCBC"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/pointsLabel"
@@ -193,13 +194,14 @@
             android:layout_marginTop="5dp" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
             android:gravity="center" android:layout_marginLeft="50dp" android:layout_marginStart="50dp"
-            android:layout_marginRight="50dp" android:layout_marginEnd="50dp"/>
+            android:layout_marginRight="50dp" android:layout_marginEnd="50dp" android:textColor="#BCBCBC"/>
     <ImageView
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:id="@+id/serve_arrow"
-            android:background="#0037FF" app:layout_constraintStart_toEndOf="@+id/player_left_uneven"
+            android:background="#00FFFFFF" app:layout_constraintStart_toEndOf="@+id/player_left_uneven"
             app:layout_constraintEnd_toStartOf="@+id/player_right_even"
             app:layout_constraintBottom_toTopOf="@+id/player_left_even"
-            app:layout_constraintTop_toBottomOf="@+id/player_left_uneven"/>
+            app:layout_constraintTop_toBottomOf="@+id/player_left_uneven" android:layout_marginLeft="50dp"
+            android:layout_marginStart="50dp" android:layout_marginRight="50dp" android:layout_marginEnd="50dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
