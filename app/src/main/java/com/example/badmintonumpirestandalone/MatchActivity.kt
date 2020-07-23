@@ -35,58 +35,88 @@ class MatchActivity : AppCompatActivity() {
                                 .removeGlobalOnLayoutListener(this)
                     }
                     if (match is SingleMatch) {
+                        drawPlayerNamesAndPoints(match)
                         announce.text = match.printStartWording(resources.getString(R.string.match_start_wording_single_non_team))
-
-                        drawPlayerNamesAndPoints(match)
                     } else {
-                        announce.text = match.printStartWording(resources.getString(R.string.match_start_wording_double_non_team))
-
                         drawPlayerNamesAndPoints(match)
+                        announce.text = match.printStartWording(resources.getString(R.string.match_start_wording_double_non_team))
                     }
                 }
             })
+
+            player_teamA_static.text = match.printTeamA()
+            player_teamB_static.text = match.printTeamB()
+
             point_left.setOnClickListener {
-                if (match.sets.last().addPointLeft()) {
+                val isSetNotFinished = match.addPointLeft()
+                if (isSetNotFinished) {
                     drawPlayerNamesAndPoints(match)
                 } else {
-                    announce.text = match.printStartWording("Der Satz wurde gewonnen.")
+                    drawPlayerNamesAndPoints(match)
                     if (match.nextSetExists()) {
                         // TODO start question who serves and who accepts based on result
                         match.startNextSet(PlayerIDs.TEAMBPLAYER1, PlayerIDs.TEAMAPLAYER1)
+                        startNextSetSequence(match)
                     } else {
-                        announce.text = match.printStartWording("Das Spiel wurde gewonnen.")
+                        showEndGame(match)
                     }
-                    drawPlayerNamesAndPoints(match)
                 }
             }
 
             point_right.setOnClickListener {
-                if (match.sets.last().addPointRight()) {
+                val isSetNotFinished = match.addPointRight()
+                if (isSetNotFinished) {
                     drawPlayerNamesAndPoints(match)
                 } else {
-                    announce.text = match.printStartWording("Der Satz wurde gewonnen.")
+                    drawPlayerNamesAndPoints(match)
                     if (match.nextSetExists()) {
                         // TODO start question who serves and who accepts based on result
                         match.startNextSet(PlayerIDs.TEAMBPLAYER1, PlayerIDs.TEAMAPLAYER1)
                     } else {
-                        announce.text = match.printStartWording("Das Spiel wurde gewonnen.")
+                        showEndGame(match)
                     }
-                    drawPlayerNamesAndPoints(match)
                 }
+            }
+
+            undo.setOnClickListener {
+                match.undo()
+                drawPlayerNamesAndPoints(match)
+                // in case the match already ended, we can resume it here
+                point_left.isClickable = true
+                point_right.isClickable = true
+                point_left.alpha = 1f
+                point_right.alpha = 1f
             }
         }
     }
 
+    private fun startNextSetSequence(match: Match) {
+        announce.text  = "Next Set."
+    }
+
+    private fun showEndGame(match: Match) {
+        announce.text = match.printWinWording(
+            resources.getString(R.string.win_wording_non_team),
+            resources.getString(R.string.and)
+        )
+        point_left.isClickable = false
+        point_right.isClickable = false
+        point_left.alpha = 0.5f
+        point_right.alpha = 0.5f
+    }
+
     private fun drawPlayerNamesAndPoints(match: Match) {
         val currentSet = match.currentSet()
-        player_left_even.text = match getPlayerName currentSet.playerLeftEven
-        player_left_uneven.text = match getPlayerName currentSet.playerLeftUneven
-        player_right_even.text = match getPlayerName currentSet.playerRightEven
-        player_right_uneven.text = match getPlayerName currentSet.playerRightUneven
+        player_left_even.text = match getPlayerNameFrom currentSet.playerLeftEven
+        player_left_uneven.text = match getPlayerNameFrom currentSet.playerLeftUneven
+        player_right_even.text = match getPlayerNameFrom currentSet.playerRightEven
+        player_right_uneven.text = match getPlayerNameFrom currentSet.playerRightUneven
 
         val pointText = StringBuilder()
         match.sets.forEach { pointText.append("${it.points.last().pointA} - ${it.points.last().pointB}\n") }
         pointsLabel.text = pointText.toString()
+
+        announce.text = buildAnnounceText(match)
 
         if (serve_arrow.height > 0) {
             val servePosX = if (currentSet.isServeLeft()) 0f else serve_arrow.width.toFloat()
@@ -106,6 +136,23 @@ class MatchActivity : AppCompatActivity() {
 
 
 
+    }
+
+    private fun buildAnnounceText(match: Match): String {
+        val announceBuilder = StringBuilder()
+        if (match.currentSet().serveChanged()) {
+            announceBuilder.append("${resources.getString(R.string.serve_change)} ")
+        }
+        announceBuilder.append(match.getCurrentPointsString(
+            resources.getString(R.string.both),
+            resources.getString(R.string.setpoint),
+            resources.getString(R.string.matchpoint)
+        ))
+        if (match.currentSet().isBreak()) {
+            announceBuilder.append(". ${resources.getString(R.string.break_set_mid)}")
+        }
+
+        return announceBuilder.toString()
     }
 
     /**

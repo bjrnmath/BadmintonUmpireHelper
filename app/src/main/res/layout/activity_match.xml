@@ -15,7 +15,7 @@
             app:layout_constraintEnd_toStartOf="@+id/point_right" android:layout_marginLeft="50dp"
             android:layout_marginStart="50dp" android:layout_marginRight="50dp" android:layout_marginEnd="50dp"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toBottomOf="@+id/net"
-            android:gravity="center"/>
+            android:gravity="center" android:textSize="20sp"/>
     <View
             android:id="@+id/court_top"
             android:layout_width="0dp"
@@ -146,7 +146,7 @@
             android:layout_height="wrap_content" android:id="@+id/player_left_uneven"
             app:layout_constraintStart_toEndOf="@+id/court_left2" app:layout_constraintTop_toBottomOf="@+id/court_top2"
             app:layout_constraintBottom_toTopOf="@+id/court_left_center" android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp" android:textColor="#BCBCBC"/>
+            android:layout_marginStart="10dp" android:textColor="#BCBCBC" android:textSize="20sp"/>
     <TextView
             android:text="TextView"
             android:layout_width="wrap_content"
@@ -154,7 +154,8 @@
             app:layout_constraintTop_toBottomOf="@+id/court_top2"
             app:layout_constraintBottom_toTopOf="@id/court_right_center"
             app:layout_constraintVertical_bias="0.512" app:layout_constraintEnd_toStartOf="@+id/court_right2"
-            android:layout_marginRight="10dp" android:layout_marginEnd="10dp" android:textColor="#BCBCBC"/>
+            android:layout_marginRight="10dp" android:layout_marginEnd="10dp" android:textColor="#BCBCBC"
+            android:textSize="20sp"/>
     <TextView
             android:text="TextView"
             android:layout_width="wrap_content"
@@ -162,7 +163,7 @@
             app:layout_constraintEnd_toStartOf="@+id/court_right2"
             app:layout_constraintTop_toBottomOf="@+id/court_right_center"
             app:layout_constraintBottom_toTopOf="@+id/court_bottom2" android:layout_marginRight="10dp"
-            android:layout_marginEnd="10dp" android:textColor="#BCBCBC"/>
+            android:layout_marginEnd="10dp" android:textColor="#BCBCBC" android:textSize="20sp"/>
     <TextView
             android:text="TextView"
             android:layout_width="wrap_content"
@@ -170,23 +171,36 @@
             app:layout_constraintStart_toEndOf="@+id/court_left2"
             app:layout_constraintTop_toBottomOf="@+id/court_left_center"
             app:layout_constraintBottom_toTopOf="@+id/court_bottom2" android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp" android:textColor="#BCBCBC"/>
+            android:layout_marginStart="10dp" android:textColor="#BCBCBC" android:textSize="20sp"/>
     <Button
             android:text="@string/plus_one"
             android:layout_width="100dp"
-            android:layout_height="100dp" android:id="@+id/point_left"
+            android:layout_height="0dp" android:id="@+id/point_left"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp" app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="10dp" android:textSize="30sp" android:textStyle="bold"
-            android:background="#515151" android:textColor="#BCBCBC"/>
+            android:background="#515151" android:textColor="#BCBCBC"
+            app:layout_constraintTop_toBottomOf="@+id/court_bottom" android:layout_marginTop="10dp"/>
+    <Button
+            android:text="@string/undo"
+            android:layout_width="100dp"
+            android:layout_height="0dp" android:id="@+id/undo"
+            android:textSize="30sp" android:textStyle="bold"
+            android:background="#515151" android:textColor="#BCBCBC"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/court_top" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="10dp" android:layout_marginStart="10dp"
+    />
     <Button
             android:text="@string/plus_one"
             android:layout_width="100dp"
-            android:layout_height="100dp" android:id="@+id/point_right"
+            android:layout_height="0dp" android:id="@+id/point_right"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="10dp" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginRight="10dp" android:layout_marginEnd="10dp" android:textSize="30sp"
-            android:textStyle="bold" android:background="#515151" android:textColor="#BCBCBC"/>
+            android:textStyle="bold" android:background="#515151" android:textColor="#BCBCBC"
+            android:layout_marginTop="10dp" app:layout_constraintTop_toBottomOf="@+id/court_bottom"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/pointsLabel"
@@ -194,7 +208,27 @@
             android:layout_marginTop="5dp" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
             android:gravity="center" android:layout_marginLeft="50dp" android:layout_marginStart="50dp"
-            android:layout_marginRight="50dp" android:layout_marginEnd="50dp" android:textColor="#BCBCBC"/>
+            android:layout_marginRight="50dp" android:layout_marginEnd="50dp" android:textColor="#BCBCBC"
+            android:textSize="20sp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/player_teamB_static"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:textColor="#BCBCBC"
+            android:textSize="20sp" app:layout_constraintStart_toEndOf="@+id/pointsLabel"
+            android:layout_marginLeft="30dp" android:layout_marginStart="30dp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/player_teamA_static"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:textColor="#BCBCBC"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@+id/pointsLabel" android:layout_marginRight="30dp"
+            android:layout_marginEnd="30dp"/>
     <ImageView
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -204,4 +238,13 @@
             app:layout_constraintBottom_toTopOf="@+id/player_left_even"
             app:layout_constraintTop_toBottomOf="@+id/player_left_uneven" android:layout_marginLeft="50dp"
             android:layout_marginStart="50dp" android:layout_marginRight="50dp" android:layout_marginEnd="50dp"/>
+    <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" android:visibility="invisible" android:background="#202020"
+            app:layout_constraintTop_toTopOf="@id/net">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:orientation="vertical"/>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,4 +24,12 @@
         Bitte spielen.
     </string>
     <string name="plus_one">+1</string>
+    <string name="serve_change">Aufschlagwechsel.</string>
+    <string name="break_set_mid">Pause.</string>
+    <string name="both">beide.</string>
+    <string name="setpoint">Satzpunkt</string>
+    <string name="matchpoint">Spielpunkt</string>
+    <string name="undo">Undo</string>
+    <string name="and">und</string>
+    <string name="win_wording_non_team">Das Spiel wurde gewonnen von %s mit %s.</string>
 </resources>

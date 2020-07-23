@@ -8,23 +8,30 @@ data class SetPoint(val pointA: Int, val pointB: Int, val serve: PlayerIDs, val 
 class MatchSet( private val match: Match,
                 serve: PlayerIDs,
                 accept: PlayerIDs,
-                val teamARight: Boolean
+                var teamARight: Boolean
 ): Serializable {
 
-    var playerLeftEven = if (!teamARight && match.isTeamA(serve)) serve else accept
-    var playerLeftUneven = if (!teamARight && match.isTeamA(serve)) match.getTeamMate(serve) else match.getTeamMate(accept)
-    var playerRightEven = if (teamARight && match.isTeamA(serve)) serve else accept
-    var playerRightUneven = if (teamARight && match.isTeamA(serve)) match.getTeamMate(serve) else match.getTeamMate(accept)
+    var playerLeftEven = if ((teamARight && !match.isTeamA(serve)) || (!teamARight && match.isTeamA(serve))) serve else accept
+    // player right even is the opposite of player left even
+    var playerRightEven = if ((teamARight && !match.isTeamA(serve)) || (!teamARight && match.isTeamA(serve))) accept else serve
+    var playerLeftUneven = match.getTeamMate(playerLeftEven)
+    var playerRightUneven = match.getTeamMate(playerRightEven)
 
     val points = mutableListOf(SetPoint(0, 0, serve, accept))
 
-    val SETEND = 21 // Number of points needed to win the set
-    val MAXPOINTS = 30 // Maximal number of points per set
+    fun serveChanged() = points.size > 1 && points.last().serve != points[points.size - 2].serve
 
     fun getCurrentPointsLeft() = if (teamARight) points.last().pointB else points.last().pointA
     fun getCurrentPointsRight() = if (teamARight) points.last().pointA else points.last().pointB
     fun isServeLeft() =
         (match.isTeamA(points.last().serve) && !teamARight) || (!match.isTeamA(points.last().serve) && teamARight)
+    fun isBreak() = points.size > 1 && (getCurrentPointsLeft() == Utils.SETMIDDLE || getCurrentPointsRight() == Utils.SETMIDDLE) &&
+            points[points.size - 2].pointA < Utils.SETMIDDLE && points[points.size - 2].pointB < Utils.SETMIDDLE
+    fun isSetNearEnd() = points.size > 1 &&
+            //set near end either happens at Utils.SETNEAREND once or at Utils.SETNEAREND2 always
+            ((getCurrentPointsLeft() == Utils.SETNEAREND || getCurrentPointsRight() == Utils.SETNEAREND) &&
+            points[points.size - 2].pointA < Utils.SETNEAREND && points[points.size - 2].pointB < Utils.SETNEAREND ||
+            (getCurrentPointsLeft() == Utils.SETNEAREND2 || getCurrentPointsRight() == Utils.SETNEAREND2))
 
     /**
      * Returns true if the set is not finished yet, i.e. no team won by now.
@@ -75,9 +82,9 @@ class MatchSet( private val match: Match,
     private fun checkEnd(): Boolean {
         val state = points.last()
 
-        return !((state.pointA >= SETEND || state.pointB >= SETEND) &&
+        return !(((state.pointA >= Utils.SETSTANDARD || state.pointB >= Utils.SETSTANDARD) &&
                 abs(state.pointA - state.pointB) >= 2) ||
-                (state.pointA >= MAXPOINTS || state.pointB >= MAXPOINTS)
+                (state.pointA >= Utils.SETMAX || state.pointB >= Utils.SETMAX))
     }
 
     private fun switchLeft() {
@@ -94,6 +101,52 @@ class MatchSet( private val match: Match,
 
     override fun toString(): String {
         return "MatchSet(player_left_even=$playerLeftEven, player_left_uneven=$playerLeftUneven, player_right_even=$playerRightEven, player_right_uneven=$playerRightUneven, points=${points.last()})"
+    }
+
+    /**
+     * Return the current points as string, including given setEndAnnounce (either setpoint or matchpoint) and
+     * "both" if the points are equal.
+     */
+    fun getCurrentPointsString(bothString: String, setPointString: String): String {
+        val setEndAnnounceString = if (isSetNearEnd()) {
+            setPointString
+        } else {
+            if (getCurrentPointsLeft() == getCurrentPointsRight()) {
+                ""
+            } else {
+                "-"
+            }
+        }
+
+        // if both have the same points
+        if (getCurrentPointsLeft() == getCurrentPointsRight()) {
+            return "${getCurrentPointsLeft()} $setEndAnnounceString $bothString"
+        }
+
+        // if the points are different, setEndAnnounceString contains the '-' character if it is not close to the set end
+        return if (isServeLeft()) {
+            "${getCurrentPointsLeft()} $setEndAnnounceString ${getCurrentPointsRight()}"
+        } else {
+            "${getCurrentPointsRight()} $setEndAnnounceString ${getCurrentPointsLeft()}"
+        }
+    }
+
+    fun undo() {
+        if (isBreak()) {
+            // undo the side swapping by swapping sides again
+            swapSides()
+        }
+        points.removeAt(points.lastIndex)
+    }
+
+    fun swapSides() {
+        val tmpLeftEven = playerLeftEven
+        val tmpLeftUneven = playerLeftUneven
+        playerLeftEven = playerRightEven
+        playerLeftUneven = playerRightUneven
+        playerRightEven = tmpLeftEven
+        playerRightUneven = tmpLeftUneven
+        teamARight = !teamARight
     }
 
 
