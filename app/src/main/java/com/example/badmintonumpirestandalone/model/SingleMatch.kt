@@ -1,5 +1,7 @@
 package com.example.badmintonumpirestandalone.model
 
+import java.lang.IllegalStateException
+
 class SingleMatch(playerTeamA: List<String>, playerTeamB: List<String>): Match(playerTeamA, playerTeamB){
 
     override fun printTeamA(): String {

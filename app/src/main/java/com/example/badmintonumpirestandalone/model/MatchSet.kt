@@ -27,7 +27,7 @@ class MatchSet( private val match: Match,
         (match.isTeamA(points.last().serve) && !teamARight) || (!match.isTeamA(points.last().serve) && teamARight)
     fun isBreak() = points.size > 1 && (getCurrentPointsLeft() == Utils.SETMIDDLE || getCurrentPointsRight() == Utils.SETMIDDLE) &&
             points[points.size - 2].pointA < Utils.SETMIDDLE && points[points.size - 2].pointB < Utils.SETMIDDLE
-    fun isSetNearEnd() = points.size > 1 &&
+    private fun isSetNearEnd() = points.size > 1 &&
             //set near end either happens at Utils.SETNEAREND once or at Utils.SETNEAREND2 always
             ((getCurrentPointsLeft() == Utils.SETNEAREND || getCurrentPointsRight() == Utils.SETNEAREND) &&
             points[points.size - 2].pointA < Utils.SETNEAREND && points[points.size - 2].pointB < Utils.SETNEAREND ||

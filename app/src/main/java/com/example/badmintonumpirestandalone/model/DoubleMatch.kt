@@ -1,5 +1,7 @@
 package com.example.badmintonumpirestandalone.model
 
+import java.lang.IllegalStateException
+
 class DoubleMatch(playerTeamA: List<String>, playerTeamB: List<String>): Match(playerTeamA, playerTeamB) {
 
     private fun printTeam(team: List<String>, delim: String): String {

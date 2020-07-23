@@ -45,10 +45,28 @@ abstract class Match(val playerTeamA: List<String>, val playerTeamB: List<String
 
     fun startNextSet(serve: PlayerIDs, accept: PlayerIDs) {
         sets.add(MatchSet(this,
-            PlayerIDs.TEAMAPLAYER1,
-            PlayerIDs.TEAMBPLAYER1,
+            serve,
+            accept,
             !sets.last().teamARight
         ))
+    }
+
+    fun getSetWinner():Pair<PlayerIDs, PlayerIDs> {
+        return if (currentSet().teamARight && currentSet().getCurrentPointsRight() > currentSet().getCurrentPointsLeft() ||
+            !currentSet().teamARight && currentSet().getCurrentPointsRight() < currentSet().getCurrentPointsLeft()) {
+             Pair(PlayerIDs.TEAMAPLAYER1, PlayerIDs.TEAMAPLAYER2)
+        } else {
+            Pair(PlayerIDs.TEAMBPLAYER1, PlayerIDs.TEAMBPLAYER2)
+        }
+    }
+
+    fun getSetLoser():Pair<PlayerIDs, PlayerIDs> {
+        return if (currentSet().teamARight && currentSet().getCurrentPointsRight() > currentSet().getCurrentPointsLeft() ||
+            !currentSet().teamARight && currentSet().getCurrentPointsRight() < currentSet().getCurrentPointsLeft()) {
+            Pair(PlayerIDs.TEAMBPLAYER1, PlayerIDs.TEAMBPLAYER2)
+        } else {
+            Pair(PlayerIDs.TEAMAPLAYER1, PlayerIDs.TEAMAPLAYER2)
+        }
     }
 
     fun currentSet(): MatchSet {

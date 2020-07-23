@@ -32,4 +32,6 @@
     <string name="undo">Undo</string>
     <string name="and">und</string>
     <string name="win_wording_non_team">Das Spiel wurde gewonnen von %s mit %s.</string>
+    <string name="second_set_start">Zweiter Satz. Null beide. Bitte spielen.</string>
+    <string name="third_set_start">Entscheidungssatz. Null beide. Bitte spielen.</string>
 </resources>

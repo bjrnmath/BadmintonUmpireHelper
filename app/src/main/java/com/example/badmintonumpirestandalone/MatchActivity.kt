@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
+import com.example.badmintonumpirestandalone.model.DoubleMatch
 import com.example.badmintonumpirestandalone.model.Match
 import com.example.badmintonumpirestandalone.model.PlayerIDs
 import com.example.badmintonumpirestandalone.model.SingleMatch
@@ -52,12 +54,10 @@ class MatchActivity : AppCompatActivity() {
                 if (isSetNotFinished) {
                     drawPlayerNamesAndPoints(match)
                 } else {
-                    drawPlayerNamesAndPoints(match)
                     if (match.nextSetExists()) {
-                        // TODO start question who serves and who accepts based on result
-                        match.startNextSet(PlayerIDs.TEAMBPLAYER1, PlayerIDs.TEAMAPLAYER1)
                         startNextSetSequence(match)
                     } else {
+                        drawPlayerNamesAndPoints(match)
                         showEndGame(match)
                     }
                 }
@@ -68,11 +68,10 @@ class MatchActivity : AppCompatActivity() {
                 if (isSetNotFinished) {
                     drawPlayerNamesAndPoints(match)
                 } else {
-                    drawPlayerNamesAndPoints(match)
                     if (match.nextSetExists()) {
-                        // TODO start question who serves and who accepts based on result
-                        match.startNextSet(PlayerIDs.TEAMBPLAYER1, PlayerIDs.TEAMAPLAYER1)
+                        startNextSetSequence(match)
                     } else {
+                        drawPlayerNamesAndPoints(match)
                         showEndGame(match)
                     }
                 }
@@ -91,7 +90,73 @@ class MatchActivity : AppCompatActivity() {
     }
 
     private fun startNextSetSequence(match: Match) {
-        announce.text  = "Next Set."
+        // for single matches it is clear who serves and accepts
+        if (match is DoubleMatch) {
+            val winner = match.getSetWinner()
+            val loser = match.getSetLoser()
+            var serve = PlayerIDs.UNDEF
+            var accept = PlayerIDs.UNDEF
+            next_set_selection.isVisible = true
+            serve_between_sets_option1.isVisible = true
+            serve_between_sets_option2.isVisible = true
+            serve_between_sets.isVisible = true
+            accept_between_sets_option1.isVisible = true
+            accept_between_sets_option2.isVisible = true
+            accept_between_sets.isVisible = true
+            point_left.isVisible = false
+            point_right.isVisible = false
+
+            val startNext = {
+                if (serve != PlayerIDs.UNDEF && accept != PlayerIDs.UNDEF) {
+                    match.startNextSet(serve, accept)
+                    next_set_selection.isVisible = false
+                    point_left.isVisible = true
+                    point_right.isVisible = true
+                    drawPlayerNamesAndPoints(match)
+                    announce.text = if (match.sets.size == 2)
+                        resources.getString(R.string.second_set_start)
+                    else
+                        resources.getString(R.string.third_set_start)
+                }
+            }
+
+            serve_between_sets_option1.text = match getPlayerNameFrom winner.first
+            serve_between_sets_option1.setOnClickListener {
+                serve_between_sets_option1.isVisible = false
+                serve_between_sets_option2.isVisible = false
+                serve_between_sets.isVisible = false
+                serve = winner.first
+                startNext()
+            }
+            serve_between_sets_option2.text = match getPlayerNameFrom winner.second
+            serve_between_sets_option2.setOnClickListener {
+                serve_between_sets_option1.isVisible = false
+                serve_between_sets_option2.isVisible = false
+                serve_between_sets.isVisible = false
+                serve = winner.second
+                startNext()
+            }
+
+            accept_between_sets_option1.text = match getPlayerNameFrom loser.first
+            accept_between_sets_option1.setOnClickListener {
+                accept_between_sets_option1.isVisible = false
+                accept_between_sets_option2.isVisible = false
+                accept_between_sets.isVisible = false
+                accept = loser.first
+                startNext()
+            }
+            accept_between_sets_option2.text = match getPlayerNameFrom loser.second
+            accept_between_sets_option2.setOnClickListener {
+                accept_between_sets_option1.isVisible = false
+                accept_between_sets_option2.isVisible = false
+                accept_between_sets.isVisible = false
+                accept = loser.second
+                startNext()
+            }
+        } else {
+            match.startNextSet(match.getSetWinner().first, match.getSetLoser().second)
+        }
+        drawPlayerNamesAndPoints(match)
     }
 
     private fun showEndGame(match: Match) {
