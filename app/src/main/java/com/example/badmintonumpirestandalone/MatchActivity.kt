@@ -6,12 +6,10 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import com.example.badmintonumpirestandalone.model.DoubleMatch
-import com.example.badmintonumpirestandalone.model.Match
-import com.example.badmintonumpirestandalone.model.PlayerIDs
-import com.example.badmintonumpirestandalone.model.SingleMatch
+import com.example.badmintonumpirestandalone.model.*
 import kotlinx.android.synthetic.main.activity_match.*
 import kotlin.math.sqrt
 
@@ -61,6 +59,7 @@ class MatchActivity : AppCompatActivity() {
                         showEndGame(match)
                     }
                 }
+                delayButton(point_left)
             }
 
             point_right.setOnClickListener {
@@ -75,6 +74,7 @@ class MatchActivity : AppCompatActivity() {
                         showEndGame(match)
                     }
                 }
+                delayButton(point_right)
             }
 
             undo.setOnClickListener {
@@ -87,6 +87,15 @@ class MatchActivity : AppCompatActivity() {
                 point_right.alpha = 1f
             }
         }
+    }
+
+    private fun delayButton(button: Button) {
+        button.isEnabled = false
+        button.alpha = 0.5f
+        button.postDelayed({
+            button.isEnabled = true
+            button.alpha = 1f
+        }, Utils.BUTTONDELAYMILLIS)
     }
 
     private fun startNextSetSequence(match: Match) {

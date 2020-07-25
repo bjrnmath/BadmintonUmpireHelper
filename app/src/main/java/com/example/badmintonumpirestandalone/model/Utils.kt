@@ -9,5 +9,6 @@ class Utils {
         val SETSTANDARD = 21 // the usual number of points when the set ends
         val SETNEAREND = 20
         val SETNEAREND2 = 29
+        val BUTTONDELAYMILLIS = 500L
     }
 }
