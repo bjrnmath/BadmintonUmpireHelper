@@ -11,13 +11,14 @@ class MatchSet( private val match: Match,
                 var teamARight: Boolean
 ): Serializable {
 
+    val points = mutableListOf(SetPoint(0, 0, serve, accept))
+
     var playerLeftEven = if ((teamARight && !match.isTeamA(serve)) || (!teamARight && match.isTeamA(serve))) serve else accept
     // player right even is the opposite of player left even
     var playerRightEven = if ((teamARight && !match.isTeamA(serve)) || (!teamARight && match.isTeamA(serve))) accept else serve
     var playerLeftUneven = match.getTeamMate(playerLeftEven)
-    var playerRightUneven = match.getTeamMate(playerRightEven)
 
-    val points = mutableListOf(SetPoint(0, 0, serve, accept))
+    var playerRightUneven = match.getTeamMate(playerRightEven)
 
     fun serveChanged() = points.size > 1 && points.last().serve != points[points.size - 2].serve
 
@@ -36,7 +37,7 @@ class MatchSet( private val match: Match,
     /**
      * Returns true if the set is not finished yet, i.e. no team won by now.
      */
-    fun addPointLeft():Boolean {
+    fun addPointLeftDouble():Boolean {
         val currentSetPoint = points.last()
         val pointA = currentSetPoint.pointA + if (teamARight) 0 else 1
         val pointB = currentSetPoint.pointB + if (teamARight) 1 else 0
@@ -59,7 +60,38 @@ class MatchSet( private val match: Match,
     /**
      * Returns true if the set is not finished yet, i.e. no team won by now.
      */
-    fun addPointRight():Boolean {
+    fun addPointLeftSingle():Boolean {
+        val currentSetPoint = points.last()
+        val pointA = currentSetPoint.pointA + if (teamARight) 0 else 1
+        val pointB = currentSetPoint.pointB + if (teamARight) 1 else 0
+
+        val serve: PlayerIDs
+        val accept: PlayerIDs
+        if (isServeLeft()) {
+            switchRight()
+            switchLeft()
+            serve = currentSetPoint.serve
+            accept = currentSetPoint.accept
+        } else {
+            if (getCurrentPointsLeft() % 2 == getCurrentPointsRight() % 2) {
+                // if the points were equal, the players now have to switch sides, i.e.
+                // if both had even/odd points, now the new server has the opposite (odd/even), hence she/he was
+                // displayed on the wrong side, same for accept
+                switchRight()
+                switchLeft()
+            }
+            serve = currentSetPoint.accept
+            accept = currentSetPoint.serve
+        }
+
+        points.add(SetPoint(pointA, pointB, serve, accept))
+        return checkEnd()
+    }
+
+    /**
+     * Returns true if the set is not finished yet, i.e. no team won by now.
+     */
+    fun addPointRightDouble():Boolean {
         val currentSetPoint = points.last()
         val pointA = currentSetPoint.pointA + if (teamARight) 1 else 0
         val pointB = currentSetPoint.pointB + if (teamARight) 0 else 1
@@ -73,6 +105,37 @@ class MatchSet( private val match: Match,
         } else {
             serve =  if (getCurrentPointsRight() % 2 == 0) playerRightEven else playerRightUneven
             accept =  if (getCurrentPointsRight() % 2 == 0) playerLeftEven else playerLeftUneven
+        }
+
+        points.add(SetPoint(pointA, pointB, serve, accept))
+        return checkEnd()
+    }
+
+    /**
+     * Returns true if the set is not finished yet, i.e. no team won by now.
+     */
+    fun addPointRightSingle():Boolean {
+        val currentSetPoint = points.last()
+        val pointA = currentSetPoint.pointA + if (teamARight) 1 else 0
+        val pointB = currentSetPoint.pointB + if (teamARight) 0 else 1
+
+        val serve: PlayerIDs
+        val accept: PlayerIDs
+        if (!isServeLeft()) {
+            switchRight()
+            switchLeft()
+            serve = currentSetPoint.serve
+            accept = currentSetPoint.accept
+        } else {
+            if (getCurrentPointsRight() % 2 == getCurrentPointsLeft() % 2) {
+                // if the points were equally even or odd, the players now have to switch sides, i.e.
+                // if both had even/odd points, now the new server has the opposite (odd/even), hence she/he was
+                // displayed on the wrong side, same for accept
+                switchRight()
+                switchLeft()
+            }
+            serve = currentSetPoint.accept
+            accept = currentSetPoint.serve
         }
 
         points.add(SetPoint(pointA, pointB, serve, accept))
@@ -131,12 +194,51 @@ class MatchSet( private val match: Match,
         }
     }
 
+    /**
+     * Position players based on the current points
+     */
+    private fun positionPlayers(serve: PlayerIDs, accept: PlayerIDs) {
+        if (isServeLeft()) {
+            if (getCurrentPointsLeft() % 2 == 0) {
+                playerLeftEven = serve
+                playerRightEven = accept
+
+                playerLeftUneven = match.getTeamMate(playerLeftEven)
+                playerRightUneven = match.getTeamMate(playerRightEven)
+            } else {
+                playerLeftUneven = serve
+                playerRightUneven = accept
+
+                playerLeftEven = match.getTeamMate(playerLeftUneven)
+                playerRightEven = match.getTeamMate(playerRightUneven)
+            }
+        } else {
+            if (getCurrentPointsRight() % 2 == 0) {
+                playerRightEven = serve
+                playerLeftEven = accept
+
+                playerLeftUneven = match.getTeamMate(playerLeftEven)
+                playerRightUneven = match.getTeamMate(playerRightEven)
+
+            } else {
+                playerRightUneven = serve
+                playerLeftUneven = accept
+
+
+                playerLeftEven = match.getTeamMate(playerLeftUneven)
+                playerRightEven = match.getTeamMate(playerRightUneven)
+            }
+        }
+    }
+
     fun undo() {
         if (isBreak()) {
             // undo the side swapping by swapping sides again
             swapSides()
         }
         points.removeAt(points.lastIndex)
+
+        positionPlayers(points.last().serve, points.last().accept)
     }
 
     fun swapSides() {

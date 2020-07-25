@@ -20,6 +20,20 @@ class SingleMatch(playerTeamA: List<String>, playerTeamB: List<String>): Match(p
         return printTeamB()
     }
 
+    override fun addPointLeft(): Boolean {
+        val endSet = currentSet().addPointLeftSingle()
+        swapSidesIfNecessary()
+
+        return endSet
+    }
+
+    override fun addPointRight(): Boolean {
+        val endSet = currentSet().addPointRightSingle()
+        swapSidesIfNecessary()
+
+        return endSet
+    }
+
     override fun printStartWording(format: String): String {
         // TODO add existence checks and do proper error handling here
         val set = sets[0]

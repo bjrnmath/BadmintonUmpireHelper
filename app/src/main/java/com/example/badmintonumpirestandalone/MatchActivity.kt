@@ -91,6 +91,9 @@ class MatchActivity : AppCompatActivity() {
 
     private fun startNextSetSequence(match: Match) {
         // for single matches it is clear who serves and accepts
+        drawPlayerNamesAndPoints(match)
+        val setStartAnnounce = if (match.sets.size == 1) R.string.first_set_end else R.string.second_set_end
+        announce.text = match.nextSetAnnounce(resources.getString(setStartAnnounce), resources.getString(R.string.and))
         if (match is DoubleMatch) {
             val winner = match.getSetWinner()
             val loser = match.getSetLoser()
@@ -154,9 +157,9 @@ class MatchActivity : AppCompatActivity() {
                 startNext()
             }
         } else {
-            match.startNextSet(match.getSetWinner().first, match.getSetLoser().second)
+            match.startNextSet(match.getSetWinner().first, match.getSetLoser().first)
+            drawPlayerNamesAndPoints(match)
         }
-        drawPlayerNamesAndPoints(match)
     }
 
     private fun showEndGame(match: Match) {

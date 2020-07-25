@@ -2,7 +2,6 @@ package com.example.badmintonumpirestandalone.model
 
 import java.io.Serializable
 import java.lang.IllegalStateException
-import java.lang.StringBuilder
 
 // TODO this could possibly be handled better
 enum class PlayerIDs {
@@ -119,40 +118,52 @@ abstract class Match(val playerTeamA: List<String>, val playerTeamB: List<String
         }
     }
 
-    fun addPointLeft(): Boolean {
-        val endSet = currentSet().addPointLeft()
+    abstract fun addPointLeft():Boolean
+    abstract fun addPointRight():Boolean
+
+    fun swapSidesIfNecessary() {
         if (sets.size == 3 && currentSet().isBreak()) {
             currentSet().swapSides()
         }
-
-        return endSet
-    }
-
-    fun addPointRight(): Boolean {
-        val endSet = currentSet().addPointRight()
-        if (sets.size == 3 && currentSet().isBreak()) {
-            currentSet().swapSides()
-        }
-
-        return endSet
     }
 
     private fun isWinnerA():Boolean {
         return sets.filter {
-            it.teamARight && it.getCurrentPointsRight() > it.getCurrentPointsLeft() ||
-            !it.teamARight && it.getCurrentPointsRight() < it.getCurrentPointsLeft()
+            isWinnerA(it)
         }.count() >= 2
     }
 
+    private fun isWinnerA(currentSet: MatchSet) =
+        currentSet.teamARight && currentSet.getCurrentPointsRight() > currentSet.getCurrentPointsLeft() ||
+                !currentSet.teamARight && currentSet.getCurrentPointsRight() < currentSet.getCurrentPointsLeft()
+
     fun printWinWording(string: String, and: String): CharSequence? {
         val winnerA = isWinnerA()
-        val winnerTeam = if (winnerA) printTeamAPretty(and) else printTeamBPretty(and)
+        val winnerTeam = printWinnerTeamPretty(winnerA, and)
         val points = sets.joinToString(", ") {
-            if (winnerA && it.teamARight || !winnerA && !it.teamARight)
-                "${it.getCurrentPointsRight()}-${it.getCurrentPointsLeft()}"
-            else
-                "${it.getCurrentPointsLeft()}-${it.getCurrentPointsRight()}"
+            printWinnerPointsPretty(winnerA, it)
         }
         return string.format(winnerTeam, points)
+    }
+
+    private fun printWinnerPointsPretty(
+        winnerA: Boolean,
+        currentSet: MatchSet
+    ): CharSequence {
+        return if (winnerA && currentSet.teamARight || !winnerA && !currentSet.teamARight)
+            "${currentSet.getCurrentPointsRight()}-${currentSet.getCurrentPointsLeft()}"
+        else
+            "${currentSet.getCurrentPointsLeft()}-${currentSet.getCurrentPointsRight()}"
+    }
+
+    private fun printWinnerTeamPretty(winnerA: Boolean, and: String) =
+        if (winnerA) printTeamAPretty(and) else printTeamBPretty(and)
+
+    fun nextSetAnnounce(nextSetAnnounce: String, and: String): CharSequence? {
+        val winnerA = isWinnerA(currentSet())
+        return nextSetAnnounce.format(
+            printWinnerTeamPretty(winnerA, and),
+            printWinnerPointsPretty(winnerA, currentSet())
+        )
     }
 }

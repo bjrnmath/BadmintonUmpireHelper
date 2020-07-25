@@ -24,6 +24,20 @@ class DoubleMatch(playerTeamA: List<String>, playerTeamB: List<String>): Match(p
         return printTeam(playerTeamB, " $and ")
     }
 
+    override fun addPointLeft(): Boolean {
+        val endSet = currentSet().addPointLeftDouble()
+        swapSidesIfNecessary()
+
+        return endSet
+    }
+
+    override fun addPointRight(): Boolean {
+        val endSet = currentSet().addPointRightDouble()
+        swapSidesIfNecessary()
+
+        return endSet
+    }
+
     override fun printStartWording(format: String): String {
         // TODO add existence checks and do proper error handling here
         val set = sets[0]

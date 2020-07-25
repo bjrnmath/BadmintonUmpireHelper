@@ -31,7 +31,9 @@
     <string name="matchpoint">Spielpunkt</string>
     <string name="undo">Undo</string>
     <string name="and">und</string>
-    <string name="win_wording_non_team">Das Spiel wurde gewonnen von %s mit %s.</string>
+    <string name="win_wording_non_team">Satz. Das Spiel wurde gewonnen von %s mit %s.</string>
+    <string name="first_set_end">Satz. Der erste Satz wurde gewonnen von %s mit %s.</string>
+    <string name="second_set_end">Satz. Der zweite Satz wurde gewonnen von %s mit %s. Einen Satz beide.</string>
     <string name="second_set_start">Zweiter Satz. Null beide. Bitte spielen.</string>
     <string name="third_set_start">Entscheidungssatz. Null beide. Bitte spielen.</string>
 </resources>
