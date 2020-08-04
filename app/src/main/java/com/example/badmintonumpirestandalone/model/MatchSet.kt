@@ -232,7 +232,7 @@ class MatchSet( private val match: Match,
     }
 
     fun undo() {
-        if (isBreak()) {
+        if (isBreak() && match.sets.size > 2) {
             // undo the side swapping by swapping sides again
             swapSides()
         }

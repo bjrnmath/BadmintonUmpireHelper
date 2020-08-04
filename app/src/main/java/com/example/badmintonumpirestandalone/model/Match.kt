@@ -14,6 +14,7 @@ enum class PlayerIDs {
 
 abstract class Match(val playerTeamA: List<String>, val playerTeamB: List<String>): Serializable {
     var sets = mutableListOf<MatchSet>()
+    val fieldNumber = 1 //TODO in future this needs to be set
 
     abstract fun printTeamA(): String
     abstract fun printTeamAPretty(and: String): String

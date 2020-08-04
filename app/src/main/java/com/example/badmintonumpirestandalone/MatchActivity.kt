@@ -4,6 +4,7 @@ import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.Button
@@ -15,6 +16,8 @@ import kotlin.math.sqrt
 
 
 class MatchActivity : AppCompatActivity() {
+
+    lateinit var countdown: CountDownTimer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,11 +39,10 @@ class MatchActivity : AppCompatActivity() {
                     }
                     if (match is SingleMatch) {
                         drawPlayerNamesAndPoints(match)
-                        announce.text = match.printStartWording(resources.getString(R.string.match_start_wording_single_non_team))
                     } else {
                         drawPlayerNamesAndPoints(match)
-                        announce.text = match.printStartWording(resources.getString(R.string.match_start_wording_double_non_team))
                     }
+                    announce.text = ""
                 }
             })
 
@@ -80,6 +82,27 @@ class MatchActivity : AppCompatActivity() {
             undo.setOnClickListener {
                 undo(match)
             }
+
+            // set start counter which is used for counting the warmup time
+            showNextSetSelectionWithoutButtons()
+            next_set_selection.background.alpha = 90
+
+            startTimerButtonCounter(match, Utils.WARMUPTIMEMILLIS)
+
+            timer_button.setOnClickListener {
+                next_set_selection.isVisible = false
+                next_set_selection.background.alpha = 100
+                point_left.isVisible = true
+                point_right.isVisible = true
+
+                if (match is SingleMatch) {
+                    drawPlayerNamesAndPoints(match)
+                    announce.text = match.printStartWording(resources.getString(R.string.match_start_wording_single_non_team))
+                } else {
+                    drawPlayerNamesAndPoints(match)
+                    announce.text = match.printStartWording(resources.getString(R.string.match_start_wording_double_non_team))
+                }
+            }
         }
     }
 
@@ -94,10 +117,16 @@ class MatchActivity : AppCompatActivity() {
             finish()
             return
         }
+        if (::countdown.isInitialized) {
+            countdown.cancel()
+        }
+        next_set_selection.isVisible = false
         drawPlayerNamesAndPoints(match)
         // in case the match already ended, we can resume it here
         point_left.isClickable = true
         point_right.isClickable = true
+        point_left.isVisible = true
+        point_right.isVisible = true
         point_left.alpha = 1f
         point_right.alpha = 1f
     }
@@ -142,7 +171,15 @@ class MatchActivity : AppCompatActivity() {
                         resources.getString(R.string.second_set_start)
                     else
                         resources.getString(R.string.third_set_start)
+                } else {
+                    announce.text = resources.getString(R.string.please_choose_serve_accept)
                 }
+            }
+
+            startTimerButtonCounter(match, Utils.BREAKTIMESETFINISHMILLIS)
+
+            timer_button.setOnClickListener {
+                startNext()
             }
 
             serve_between_sets_option1.text = match getPlayerNameFrom winner.first
@@ -151,7 +188,7 @@ class MatchActivity : AppCompatActivity() {
                 serve_between_sets_option2.isVisible = false
                 serve_between_sets.isVisible = false
                 serve = winner.first
-                startNext()
+                announce.text = ""
             }
             serve_between_sets_option2.text = match getPlayerNameFrom winner.second
             serve_between_sets_option2.setOnClickListener {
@@ -159,7 +196,7 @@ class MatchActivity : AppCompatActivity() {
                 serve_between_sets_option2.isVisible = false
                 serve_between_sets.isVisible = false
                 serve = winner.second
-                startNext()
+                announce.text = ""
             }
 
             accept_between_sets_option1.text = match getPlayerNameFrom loser.first
@@ -168,7 +205,7 @@ class MatchActivity : AppCompatActivity() {
                 accept_between_sets_option2.isVisible = false
                 accept_between_sets.isVisible = false
                 accept = loser.first
-                startNext()
+                announce.text = ""
             }
             accept_between_sets_option2.text = match getPlayerNameFrom loser.second
             accept_between_sets_option2.setOnClickListener {
@@ -176,12 +213,59 @@ class MatchActivity : AppCompatActivity() {
                 accept_between_sets_option2.isVisible = false
                 accept_between_sets.isVisible = false
                 accept = loser.second
-                startNext()
+                announce.text = ""
             }
         } else {
-            match.startNextSet(match.getSetWinner().first, match.getSetLoser().first)
-            drawPlayerNamesAndPoints(match)
+            showNextSetSelectionWithoutButtons()
+
+            startTimerButtonCounter(match, Utils.BREAKTIMESETFINISHMILLIS)
+
+            timer_button.setOnClickListener {
+                next_set_selection.isVisible = false
+                match.startNextSet(match.getSetWinner().first, match.getSetLoser().first)
+                drawPlayerNamesAndPoints(match)
+                point_left.isVisible = true
+                point_right.isVisible = true
+                announce.text = if (match.sets.size == 2)
+                    resources.getString(R.string.second_set_start)
+                else
+                    resources.getString(R.string.third_set_start)
+            }
         }
+    }
+
+    private fun showNextSetSelectionWithoutButtons() {
+        next_set_selection.isVisible = true
+        serve_between_sets_option1.isVisible = false
+        serve_between_sets_option2.isVisible = false
+        serve_between_sets.isVisible = false
+        accept_between_sets_option1.isVisible = false
+        accept_between_sets_option2.isVisible = false
+        accept_between_sets.isVisible = false
+        point_left.isVisible = false
+        point_right.isVisible = false
+    }
+
+    private fun startTimerButtonCounter(match: Match, breakTime: Long) {
+        if (::countdown.isInitialized) {
+            countdown.cancel()
+        }
+        countdown = object : CountDownTimer(breakTime, Utils.TICKMILLIS) {
+            override fun onTick(millisUntilFinished: Long) {
+                timer_button.text = "${millisUntilFinished / 1000L} " +
+                        "${resources.getString(R.string.seconds_left)}\n" +
+                        resources.getString(R.string.click_for_start)
+                if (millisUntilFinished <= Utils.FIELDANNOUNCESOONSTART) {
+                    // if less than 20 seconds are left, announce
+                    announce.text =
+                        resources.getString(R.string.start_soon_announce).format(match.fieldNumber, match.fieldNumber)
+                }
+            }
+
+            override fun onFinish() {
+                timer_button.text = "Start!"
+            }
+        }.start()
     }
 
     private fun showEndGame(match: Match) {
@@ -224,8 +308,20 @@ class MatchActivity : AppCompatActivity() {
             drawArrow(servePosX, servePosY)
         }
 
+        if (match.currentSet().isBreak()) {
+            showNextSetSelectionWithoutButtons()
+            next_set_selection.background.alpha = 90
 
+            startTimerButtonCounter(match, Utils.BREAKTIMESETMIDDLEMILLIS)
 
+            timer_button.setOnClickListener {
+                next_set_selection.isVisible = false
+                next_set_selection.background.alpha = 100
+                point_left.isVisible = true
+                point_right.isVisible = true
+                announce.text = resources.getString(R.string.announce_after_set_middle_break)
+            }
+        }
     }
 
     private fun buildAnnounceText(match: Match): String {
