@@ -13,7 +13,9 @@
     <string name="takes_serve">Aufschlag</string>
     <string name="takes_accept">Rückschlag</string>
     <string name="takes_left">linke Seite</string>
+    <string name="Takes_left">Linke Seite</string>
     <string name="takes_right">rechte Seite</string>
+    <string name="Takes_right">Rechte Seite</string>
     <string name="match_start_wording_single_non_team">
         Meine Damen und Herren: zu meiner Rechten %s, und zu meiner Linken %s. %s schlägt auf. Null beide.
         Bitte spielen.

@@ -78,15 +78,28 @@ class MatchActivity : AppCompatActivity() {
             }
 
             undo.setOnClickListener {
-                match.undo()
-                drawPlayerNamesAndPoints(match)
-                // in case the match already ended, we can resume it here
-                point_left.isClickable = true
-                point_right.isClickable = true
-                point_left.alpha = 1f
-                point_right.alpha = 1f
+                undo(match)
             }
         }
+    }
+
+    override fun onBackPressed() {
+        undo.callOnClick()
+    }
+
+    private fun undo(match: Match) {
+        val undone = match.undo()
+        if (!undone) {
+            match.sets.clear()
+            finish()
+            return
+        }
+        drawPlayerNamesAndPoints(match)
+        // in case the match already ended, we can resume it here
+        point_left.isClickable = true
+        point_right.isClickable = true
+        point_left.alpha = 1f
+        point_right.alpha = 1f
     }
 
     private fun delayButton(button: Button) {

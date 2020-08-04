@@ -105,17 +105,20 @@ abstract class Match(val playerTeamA: List<String>, val playerTeamB: List<String
         return "Match(playerTeamA=$playerTeamA, playerTeamB=$playerTeamB, sets=$sets)"
     }
 
-    fun undo() {
+    fun undo(): Boolean {
         if (currentSet().points.size > 1) {
             currentSet().undo()
+            return true
         } else {
             if (sets.size > 1) {
                 sets.removeAt(sets.lastIndex)
                 // also remove last made point here
                 currentSet().undo()
+                return true
             }
             // if nothing was done by now, just ignore the undo for now
         }
+        return false
     }
 
     abstract fun addPointLeft():Boolean

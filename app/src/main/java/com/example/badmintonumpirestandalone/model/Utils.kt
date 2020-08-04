@@ -10,5 +10,8 @@ class Utils {
         val SETNEAREND = 20
         val SETNEAREND2 = 29
         val BUTTONDELAYMILLIS = 500L
+        val BREAKTIMESETMIDDLEMILLIS = 60L * 1000L
+        val BREAKTIMESETFINISHMILLIS = 2L * 60L * 1000L
+        val WARMUPTIMEMILLIS = 5L * 60L * 1000L
     }
 }

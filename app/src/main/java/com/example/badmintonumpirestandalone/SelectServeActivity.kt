@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.example.badmintonumpirestandalone.model.*
 import kotlinx.android.synthetic.main.activity_serve.*
+import org.w3c.dom.Text
 import java.util.*
 
 // TODO do some refactoring on this file
@@ -62,7 +63,7 @@ class SelectServeActivity : AppCompatActivity() {
 
         val match = intent.getSerializableExtra("match")
         if (match is Match) {
-            vsHeader.text = "${match.printTeamA()} vs. ${match.printTeamB()}"
+            printPlainVsHeader(match)
 
             randomize.setOnClickListener {
                 // this should be a sufficiently random initialization
@@ -86,10 +87,26 @@ class SelectServeActivity : AppCompatActivity() {
         }
     }
 
+    private fun printPlainVsHeader(match: Match) {
+        vsHeader.text = "${match.printTeamA()} vs. ${match.printTeamB()}"
+    }
+
     private fun setSelectOnClickListenerSingle(match: Match) {
         var serve = PlayerIDs.UNDEF
         var accept = PlayerIDs.UNDEF
         var sideChoiceTeamA = Side.UNDEF
+
+        undo_serve.setOnClickListener {
+            // if nothing was done by now, we can go fully back to name choice
+            if (sideChoiceTeamA == Side.UNDEF && serve == PlayerIDs.UNDEF && accept == PlayerIDs.UNDEF) {
+                finish()
+            }
+            sideChoiceTeamA = Side.UNDEF
+            serve = PlayerIDs.UNDEF
+            accept = PlayerIDs.UNDEF
+            checkReady(serve, accept, sideChoiceTeamA, match) // for correct header printing
+            makeSingleVisible()
+        }
 
         // serve for both sides
         teamAPlayer1Serve.setOnClickListener {
@@ -157,6 +174,19 @@ class SelectServeActivity : AppCompatActivity() {
         var serve = PlayerIDs.UNDEF
         var accept = PlayerIDs.UNDEF
         var sideChoiceTeamA = Side.UNDEF
+
+        undo_serve.setOnClickListener {
+            // if nothing was done by now, we can go fully back to name choice
+            if (sideChoiceTeamA == Side.UNDEF && serve == PlayerIDs.UNDEF && accept == PlayerIDs.UNDEF) {
+                finish()
+            }
+            sideChoiceTeamA = Side.UNDEF
+            serve = PlayerIDs.UNDEF
+            accept = PlayerIDs.UNDEF
+            checkReady(serve, accept, sideChoiceTeamA, match)
+            makeSingleVisible()
+            makeDoubleVisible()
+        }
 
         // serve player 1 for both sides
         teamAPlayer1Serve.setOnClickListener {
@@ -241,10 +271,44 @@ class SelectServeActivity : AppCompatActivity() {
             makeTeamASideInvisible()
             makeTeamBSideInvisible()
         }
+    }
 
+    override fun onBackPressed() {
+        undo_serve.callOnClick()
+    }
+
+    private fun makeSingleVisible() {
+        selectButtonsSingle.forEach { it.visibility = Button.VISIBLE }
+        selectTextViewsSingle.forEach { it.visibility = TextView.VISIBLE }
+    }
+
+    private fun makeDoubleVisible() {
+        selectButtonsDouble.forEach { it.visibility = Button.VISIBLE }
+        selectTextViewsDouble.forEach { it.visibility = TextView.VISIBLE }
     }
 
     private fun checkReady(serve: PlayerIDs, accept: PlayerIDs, sideTeamA: Side, match: Match) {
+        var serveText = ""
+        if (serve != PlayerIDs.UNDEF) {
+            serveText += "\n${resources.getString(R.string.takes_serve)}: ${match getPlayerNameFrom serve}"
+        }
+
+        if (accept != PlayerIDs.UNDEF) {
+            serveText += "\n${resources.getString(R.string.takes_accept)}: ${match getPlayerNameFrom accept}"
+        }
+
+        if (sideTeamA != Side.UNDEF) {
+            if (sideTeamA == Side.RIGHT) {
+                serveText += "\n${resources.getString(R.string.Takes_left)}: ${match.printTeamB()}" +
+                        "\n${resources.getString(R.string.Takes_right)}: ${match.printTeamA()}"
+
+            } else {
+                serveText += "\n${resources.getString(R.string.Takes_left)}: ${match.printTeamA()}" +
+                        "\n${resources.getString(R.string.Takes_right)}: ${match.printTeamB()}"
+            }
+        }
+        status_header.text = serveText
+
         if (serve != PlayerIDs.UNDEF && accept != PlayerIDs.UNDEF && sideTeamA != Side.UNDEF) {
             match.sets.add(
                 MatchSet(match, serve, accept, sideTeamA == Side.RIGHT)
