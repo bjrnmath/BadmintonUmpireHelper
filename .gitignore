@@ -2,8 +2,6 @@
 gradle/
 .idea/
 gradlew*
-# omit res folder until own assets are included
-app/src/main/res/
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/android,intellij,linux,gradle
