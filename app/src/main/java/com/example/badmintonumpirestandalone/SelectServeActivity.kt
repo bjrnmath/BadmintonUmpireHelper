@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.example.badmintonumpirestandalone.model.*
 import kotlinx.android.synthetic.main.activity_serve.*
-import org.w3c.dom.Text
 import java.util.*
 
 // TODO do some refactoring on this file
@@ -298,12 +297,12 @@ class SelectServeActivity : AppCompatActivity() {
         }
 
         if (sideTeamA != Side.UNDEF) {
-            if (sideTeamA == Side.RIGHT) {
-                serveText += "\n${resources.getString(R.string.Takes_left)}: ${match.printTeamB()}" +
+            serveText += if (sideTeamA == Side.RIGHT) {
+                "\n${resources.getString(R.string.Takes_left)}: ${match.printTeamB()}" +
                         "\n${resources.getString(R.string.Takes_right)}: ${match.printTeamA()}"
 
             } else {
-                serveText += "\n${resources.getString(R.string.Takes_left)}: ${match.printTeamA()}" +
+                "\n${resources.getString(R.string.Takes_left)}: ${match.printTeamA()}" +
                         "\n${resources.getString(R.string.Takes_right)}: ${match.printTeamB()}"
             }
         }

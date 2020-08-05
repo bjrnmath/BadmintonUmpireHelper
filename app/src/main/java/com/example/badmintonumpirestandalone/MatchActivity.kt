@@ -17,7 +17,7 @@ import kotlin.math.sqrt
 
 class MatchActivity : AppCompatActivity() {
 
-    lateinit var countdown: CountDownTimer
+    private lateinit var countdown: CountDownTimer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
