@@ -85,13 +85,13 @@ class MatchActivity : AppCompatActivity() {
 
             // set start counter which is used for counting the warmup time
             showNextSetSelectionWithoutButtons()
-            next_set_selection.background.alpha = 90
+            next_set_selection.background.alpha = 200
 
             startTimerButtonCounter(match, Utils.WARMUPTIMEMILLIS)
 
             timer_button.setOnClickListener {
                 next_set_selection.isVisible = false
-                next_set_selection.background.alpha = 100
+                next_set_selection.background.alpha = 255
                 point_left.isVisible = true
                 point_right.isVisible = true
 
@@ -310,13 +310,13 @@ class MatchActivity : AppCompatActivity() {
 
         if (match.currentSet().isBreak()) {
             showNextSetSelectionWithoutButtons()
-            next_set_selection.background.alpha = 90
+            next_set_selection.background.alpha = 200
 
             startTimerButtonCounter(match, Utils.BREAKTIMESETMIDDLEMILLIS)
 
             timer_button.setOnClickListener {
                 next_set_selection.isVisible = false
-                next_set_selection.background.alpha = 100
+                next_set_selection.background.alpha = 255
                 point_left.isVisible = true
                 point_right.isVisible = true
                 announce.text = resources.getString(R.string.announce_after_set_middle_break)
