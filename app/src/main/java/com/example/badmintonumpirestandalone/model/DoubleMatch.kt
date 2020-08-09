@@ -22,18 +22,14 @@ class DoubleMatch(playerTeamA: List<String>, playerTeamB: List<String>): Match(p
         return printTeam(playerTeamB, " $and ")
     }
 
-    override fun addPointLeft(): Boolean {
-        val endSet = currentSet().addPointLeftDouble()
+    override fun addPointLeft() {
+        currentSet().addPointLeftDouble()
         swapSidesIfNecessary()
-
-        return endSet
     }
 
-    override fun addPointRight(): Boolean {
-        val endSet = currentSet().addPointRightDouble()
+    override fun addPointRight() {
+        currentSet().addPointRightDouble()
         swapSidesIfNecessary()
-
-        return endSet
     }
 
     override fun printStartWording(format: String): String {

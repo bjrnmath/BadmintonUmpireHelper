@@ -53,7 +53,12 @@ class MatchActivity : AppCompatActivity() {
                     } else {
                         drawPlayerNamesAndPoints(match)
                     }
-                    announce.text = ""
+                    // check if the match is new (no points given) or loaded (at least one point given)
+                    if (match.isNewMatch()) {
+                        startNewMatch(match)
+                    } else {
+                        showSetState(match)
+                    }
                 }
             })
 
@@ -61,33 +66,15 @@ class MatchActivity : AppCompatActivity() {
             player_teamB_static.text = match.printTeamB()
 
             point_left.setOnClickListener {
-                val isSetNotFinished = match.addPointLeft()
-                if (isSetNotFinished) {
-                    drawPlayerNamesAndPoints(match)
-                } else {
-                    if (match.nextSetExists()) {
-                        startNextSetSequence(match)
-                    } else {
-                        drawPlayerNamesAndPoints(match)
-                        showEndGame(match)
-                    }
-                }
+                match.addPointLeft()
+                showSetState(match)
                 delayButton(point_left)
                 storeMatch(editor, match)
             }
 
             point_right.setOnClickListener {
-                val isSetNotFinished = match.addPointRight()
-                if (isSetNotFinished) {
-                    drawPlayerNamesAndPoints(match)
-                } else {
-                    if (match.nextSetExists()) {
-                        startNextSetSequence(match)
-                    } else {
-                        drawPlayerNamesAndPoints(match)
-                        showEndGame(match)
-                    }
-                }
+                match.addPointRight()
+                showSetState(match)
                 delayButton(point_right)
                 storeMatch(editor, match)
             }
@@ -96,26 +83,42 @@ class MatchActivity : AppCompatActivity() {
                 undo(match)
                 storeMatch(editor, match)
             }
+        }
+    }
+    private fun showSetState(match: Match) {
+        if (match.isSetEnd()) {
+            drawPlayerNamesAndPoints(match)
+        } else {
+            if (match.nextSetExists()) {
+                startNextSetSequence(match)
+            } else {
+                drawPlayerNamesAndPoints(match)
+                showEndGame(match)
+            }
+        }
+    }
 
-            // set start counter which is used for counting the warmup time
-            showNextSetSelectionWithoutButtons()
-            next_set_selection.background.alpha = 200
+    private fun startNewMatch(match: Match) {
+        // set start counter which is used for counting the warmup time
+        showNextSetSelectionWithoutButtons()
+        next_set_selection.background.alpha = 200
 
-            startTimerButtonCounter(match, Utils.WARMUPTIMEMILLIS)
+        startTimerButtonCounter(match, Utils.WARMUPTIMEMILLIS)
 
-            timer_button.setOnClickListener {
-                next_set_selection.isVisible = false
-                next_set_selection.background.alpha = 255
-                point_left.isVisible = true
-                point_right.isVisible = true
+        timer_button.setOnClickListener {
+            next_set_selection.isVisible = false
+            next_set_selection.background.alpha = 255
+            point_left.isVisible = true
+            point_right.isVisible = true
 
-                if (match is SingleMatch) {
-                    drawPlayerNamesAndPoints(match)
-                    announce.text = match.printStartWording(resources.getString(R.string.match_start_wording_single_non_team))
-                } else {
-                    drawPlayerNamesAndPoints(match)
-                    announce.text = match.printStartWording(resources.getString(R.string.match_start_wording_double_non_team))
-                }
+            if (match is SingleMatch) {
+                drawPlayerNamesAndPoints(match)
+                announce.text =
+                    match.printStartWording(resources.getString(R.string.match_start_wording_single_non_team))
+            } else {
+                drawPlayerNamesAndPoints(match)
+                announce.text =
+                    match.printStartWording(resources.getString(R.string.match_start_wording_double_non_team))
             }
         }
     }

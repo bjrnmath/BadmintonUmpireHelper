@@ -18,18 +18,14 @@ class SingleMatch(playerTeamA: List<String>, playerTeamB: List<String>): Match(p
         return printTeamB()
     }
 
-    override fun addPointLeft(): Boolean {
-        val endSet = currentSet().addPointLeftSingle()
+    override fun addPointLeft() {
+        currentSet().addPointLeftSingle()
         swapSidesIfNecessary()
-
-        return endSet
     }
 
-    override fun addPointRight(): Boolean {
-        val endSet = currentSet().addPointRightSingle()
+    override fun addPointRight() {
+        currentSet().addPointRightSingle()
         swapSidesIfNecessary()
-
-        return endSet
     }
 
     override fun printStartWording(format: String): String {

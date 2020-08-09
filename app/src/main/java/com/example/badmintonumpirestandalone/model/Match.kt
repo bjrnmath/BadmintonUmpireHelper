@@ -26,6 +26,14 @@ abstract class Match(val playerTeamA: List<String>, val playerTeamB: List<String
     abstract fun printTeamBPretty(and: String): String
     abstract fun printStartWording(format: String): String
 
+    /**
+     * For a new match the number of sets must be 1 and the current points must be 0 on both sides.
+     */
+    fun isNewMatch() = (this.sets.size <= 1) &&
+            (this.currentSet().getCurrentPointsLeft() == 0) &&
+            (this.currentSet().getCurrentPointsRight() == 0)
+    fun isSetEnd() = currentSet().checkEnd()
+
     infix fun getPlayerNameFrom(player: PlayerIDs) = when(player) {
         PlayerIDs.TEAMAPLAYER1 -> playerTeamA[0]
         PlayerIDs.TEAMAPLAYER2 -> if (playerTeamA.size > 1) playerTeamA[1] else ""
@@ -126,8 +134,8 @@ abstract class Match(val playerTeamA: List<String>, val playerTeamB: List<String
         return false
     }
 
-    abstract fun addPointLeft():Boolean
-    abstract fun addPointRight():Boolean
+    abstract fun addPointLeft()
+    abstract fun addPointRight()
 
     fun swapSidesIfNecessary() {
         if (sets.size == 3 && currentSet().isBreak()) {

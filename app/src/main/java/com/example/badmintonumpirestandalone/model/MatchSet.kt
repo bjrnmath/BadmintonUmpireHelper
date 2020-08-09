@@ -37,7 +37,7 @@ class MatchSet( private val match: Match,
     /**
      * Returns true if the set is not finished yet, i.e. no team won by now.
      */
-    fun addPointLeftDouble():Boolean {
+    fun addPointLeftDouble() {
         val currentSetPoint = points.last()
         val pointA = currentSetPoint.pointA + if (teamARight) 0 else 1
         val pointB = currentSetPoint.pointB + if (teamARight) 1 else 0
@@ -54,13 +54,12 @@ class MatchSet( private val match: Match,
         }
 
         points.add(SetPoint(pointA, pointB, serve, accept))
-        return checkEnd()
     }
 
     /**
      * Returns true if the set is not finished yet, i.e. no team won by now.
      */
-    fun addPointLeftSingle():Boolean {
+    fun addPointLeftSingle() {
         val currentSetPoint = points.last()
         val pointA = currentSetPoint.pointA + if (teamARight) 0 else 1
         val pointB = currentSetPoint.pointB + if (teamARight) 1 else 0
@@ -85,13 +84,12 @@ class MatchSet( private val match: Match,
         }
 
         points.add(SetPoint(pointA, pointB, serve, accept))
-        return checkEnd()
     }
 
     /**
      * Returns true if the set is not finished yet, i.e. no team won by now.
      */
-    fun addPointRightDouble():Boolean {
+    fun addPointRightDouble() {
         val currentSetPoint = points.last()
         val pointA = currentSetPoint.pointA + if (teamARight) 1 else 0
         val pointB = currentSetPoint.pointB + if (teamARight) 0 else 1
@@ -108,13 +106,12 @@ class MatchSet( private val match: Match,
         }
 
         points.add(SetPoint(pointA, pointB, serve, accept))
-        return checkEnd()
     }
 
     /**
      * Returns true if the set is not finished yet, i.e. no team won by now.
      */
-    fun addPointRightSingle():Boolean {
+    fun addPointRightSingle() {
         val currentSetPoint = points.last()
         val pointA = currentSetPoint.pointA + if (teamARight) 1 else 0
         val pointB = currentSetPoint.pointB + if (teamARight) 0 else 1
@@ -139,10 +136,9 @@ class MatchSet( private val match: Match,
         }
 
         points.add(SetPoint(pointA, pointB, serve, accept))
-        return checkEnd()
     }
 
-    private fun checkEnd(): Boolean {
+    fun checkEnd(): Boolean {
         val state = points.last()
 
         return !(((state.pointA >= Utils.SETSTANDARD || state.pointB >= Utils.SETSTANDARD) &&
