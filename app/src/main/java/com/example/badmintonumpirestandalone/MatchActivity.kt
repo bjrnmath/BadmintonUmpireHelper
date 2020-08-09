@@ -1,8 +1,8 @@
 package com.example.badmintonumpirestandalone
 
+import android.content.SharedPreferences
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
-import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
@@ -10,6 +10,8 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKey
 import com.example.badmintonumpirestandalone.model.*
 import kotlinx.android.synthetic.main.activity_match.*
 import kotlin.math.sqrt
@@ -23,6 +25,20 @@ class MatchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_match)
 
+        val masterKey = MasterKey
+            .Builder(this, MasterKey.DEFAULT_MASTER_KEY_ALIAS)
+            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+            .build()
+
+        val sharedPreferences = EncryptedSharedPreferences.create(
+            this,
+            Utils.PREFERENCESNAME,
+            masterKey, // masterKey created above
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM)
+
+        val editor = sharedPreferences.edit()
+
         val match = intent.getSerializableExtra("match")
 
         if (match is Match) {
@@ -30,13 +46,8 @@ class MatchActivity : AppCompatActivity() {
             val vto = layout.viewTreeObserver
             vto.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
                 override fun onGlobalLayout() {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                        layout.viewTreeObserver
-                                .removeOnGlobalLayoutListener(this)
-                    } else {
-                        layout.viewTreeObserver
-                                .removeGlobalOnLayoutListener(this)
-                    }
+                    layout.viewTreeObserver
+                            .removeOnGlobalLayoutListener(this)
                     if (match is SingleMatch) {
                         drawPlayerNamesAndPoints(match)
                     } else {
@@ -62,6 +73,7 @@ class MatchActivity : AppCompatActivity() {
                     }
                 }
                 delayButton(point_left)
+                storeMatch(editor, match)
             }
 
             point_right.setOnClickListener {
@@ -77,10 +89,12 @@ class MatchActivity : AppCompatActivity() {
                     }
                 }
                 delayButton(point_right)
+                storeMatch(editor, match)
             }
 
             undo.setOnClickListener {
                 undo(match)
+                storeMatch(editor, match)
             }
 
             // set start counter which is used for counting the warmup time
@@ -104,6 +118,13 @@ class MatchActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun storeMatch(
+        editor: SharedPreferences.Editor,
+        match: Match
+    ) {
+        editor.putString(Utils.PREFERENCESMATCHKEY, match.toSerializedString()).apply()
     }
 
     override fun onBackPressed() {
@@ -286,9 +307,8 @@ class MatchActivity : AppCompatActivity() {
         player_right_even.text = match getPlayerNameFrom currentSet.playerRightEven
         player_right_uneven.text = match getPlayerNameFrom currentSet.playerRightUneven
 
-        val pointText = StringBuilder()
-        match.sets.forEach { pointText.append("${it.points.last().pointA} - ${it.points.last().pointB}\n") }
-        pointsLabel.text = pointText.toString()
+
+        pointsLabel.text = match.printAllPoints()
 
         announce.text = buildAnnounceText(match)
 

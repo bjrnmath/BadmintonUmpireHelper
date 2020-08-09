@@ -1,7 +1,11 @@
 package com.example.badmintonumpirestandalone.model
 
-import java.io.Serializable
-import java.lang.IllegalStateException
+import android.R.string
+import android.util.Base64
+import android.util.Base64.encodeToString
+import android.util.Pair
+import java.io.*
+
 
 // TODO this could possibly be handled better
 enum class PlayerIDs {
@@ -169,5 +173,31 @@ abstract class Match(val playerTeamA: List<String>, val playerTeamB: List<String
             printWinnerTeamPretty(winnerA, and),
             printWinnerPointsPretty(winnerA, currentSet())
         )
+    }
+
+    fun toSerializedString(): String {
+        val arrayOut = ByteArrayOutputStream()
+        val out = ObjectOutputStream(arrayOut)
+        out.writeObject(this)
+        out.close()
+        return encodeToString(arrayOut.toByteArray(),0) ?: ""
+    }
+
+    fun printAllPoints(): String {
+        return this.sets.joinToString(separator = "\n") { "${it.points.last().pointA} - ${it.points.last().pointB}" }
+    }
+
+    companion object {
+        fun fromSerializedString(matchString: String): Match? {
+            val bytes: ByteArray = Base64.decode(matchString, 0)
+            var match: Match? = null
+            try {
+                val objectInputStream = ObjectInputStream(ByteArrayInputStream(bytes))
+                match = objectInputStream.readObject() as? Match
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+            return match
+        }
     }
 }

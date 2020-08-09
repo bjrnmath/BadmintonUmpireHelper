@@ -43,4 +43,5 @@
     <string name="start_soon_announce">Feld %d noch 20 Sekunden. Feld %d noch 20 Sekunden.</string>
     <string name="please_choose_serve_accept">Zum Starten des neuen Satzes bitte zuerst Aufschläger und Rückschläger bestimmen.</string>
     <string name="announce_after_set_middle_break">11 – 0. Bitte spielen.</string>
+    <string name="load_existing_match">Lade bestehendes Spiel</string>
 </resources>

@@ -4,6 +4,8 @@ package com.example.badmintonumpirestandalone.model
 // TODO make this configurable in the future
 class Utils {
     companion object {
+        const val PREFERENCESMATCHKEY = "match-key"
+        const val PREFERENCESNAME = "badminton-umpire-helper-standalone-preferences"
         const val SETMIDDLE = 11
         const val SETMAX = 30
         const val SETSTANDARD = 21 // the usual number of points when the set ends
