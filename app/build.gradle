@@ -6,6 +6,20 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.0"
 
+    signingConfigs {
+
+        release {
+            storeFile file("ks.jks")
+            storePassword System.getenv('KEYSTOREPASSWORD')
+            keyAlias System.getenv('ALIAS')
+            keyPassword System.getenv('KEYPASSWORD')
+
+            // Optional, specify signing versions used
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
     defaultConfig {
         applicationId "com.example.badmintonumpirestandalone"
         minSdkVersion 23
@@ -19,6 +33,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

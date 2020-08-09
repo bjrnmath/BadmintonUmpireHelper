@@ -9,7 +9,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
 
     steps:
     - uses: actions/checkout@v2
@@ -19,3 +19,17 @@ jobs:
         java-version: 1.8
     - name: Build with Gradle
       run: gradle build
+    - name: Build debug APK
+      env: |
+        KEYSTOREPASSPHRASE: "${{ secrets.KEYSTOREPASSPHRASE }}"
+        KEYSTOREPASSWORD: "${{ secrets.KEYSTOREPASSWORD }}"
+        ALIAS: "${{ secrets.ALIAS }}"
+        KEYSTOREPASSPHRASE: "${{ secrets.KEYPASSWORD }}"
+      run: |
+        echo "${{ secrets.KEYSTORE }}" > keystore.jks.asc
+        sh build.sh
+    - name: Upload APK
+      uses: actions/upload-artifact@v1
+      with:
+        name: Badminton-Umpire-Helper.apk
+        path: app/build/outputs/apk/debug/app-debug.apk
