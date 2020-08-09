@@ -1,5 +1,5 @@
 gradle clean
 
-gpg -o app/ks.jks --passphrase="$KEYSTOREPASSPHRASE" --decrypt keystore.jks.asc
+echo "$KEYSTOREPASSPHRASE" | gpg --batch --yes --passphrase-fd 0 -o ks.jks --decrypt keystore.jks.asc
 
 gradle assembleRelease
