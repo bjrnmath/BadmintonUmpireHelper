@@ -1,6 +1,5 @@
 package com.example.badmintonumpirestandalone.model
 
-import android.R.string
 import android.util.Base64
 import android.util.Base64.encodeToString
 import android.util.Pair
@@ -32,7 +31,8 @@ abstract class Match(val playerTeamA: List<String>, val playerTeamB: List<String
     fun isNewMatch() = (this.sets.size <= 1) &&
             (this.currentSet().getCurrentPointsLeft() == 0) &&
             (this.currentSet().getCurrentPointsRight() == 0)
-    fun isSetEnd() = currentSet().checkEnd()
+    fun isSetNotEnd() = currentSet().checkEnd()
+    fun isFinished() = !(isSetNotEnd() || isNewMatch())
 
     infix fun getPlayerNameFrom(player: PlayerIDs) = when(player) {
         PlayerIDs.TEAMAPLAYER1 -> playerTeamA[0]
@@ -197,15 +197,17 @@ abstract class Match(val playerTeamA: List<String>, val playerTeamB: List<String
 
     companion object {
         fun fromSerializedString(matchString: String): Match? {
+            if (matchString.isEmpty()) {
+                return null
+            }
             val bytes: ByteArray = Base64.decode(matchString, 0)
-            var match: Match? = null
-            try {
+            return try {
                 val objectInputStream = ObjectInputStream(ByteArrayInputStream(bytes))
-                match = objectInputStream.readObject() as? Match
+                objectInputStream.readObject() as? Match
             } catch (e: IOException) {
                 e.printStackTrace()
+                null
             }
-            return match
         }
     }
 }

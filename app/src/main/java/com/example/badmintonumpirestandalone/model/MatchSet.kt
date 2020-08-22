@@ -138,6 +138,10 @@ class MatchSet( private val match: Match,
         points.add(SetPoint(pointA, pointB, serve, accept))
     }
 
+    /**
+     * Checks if the current set is finished.
+     * Returns true if the set is over.
+     */
     fun checkEnd(): Boolean {
         val state = points.last()
 

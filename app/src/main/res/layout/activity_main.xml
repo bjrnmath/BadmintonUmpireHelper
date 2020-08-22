@@ -10,31 +10,21 @@
             android:text="@string/start_match"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/start_match"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="5dp"
-            app:layout_constraintTop_toBottomOf="@+id/single_double"
-            android:background="#515151" android:textColor="#BCBCBC" android:textSize="20sp"/>
-    <Button
-            android:text="@string/double_match"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/single_double"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="120dp" android:background="#515151" android:textColor="#BCBCBC"
-            android:textSize="20sp"/>
+            app:layout_constraintEnd_toEndOf="@+id/player3"
+            app:layout_constraintTop_toBottomOf="@+id/player3"
+            android:background="#515151" android:textColor="#BCBCBC" android:textSize="20sp"
+            android:layout_marginTop="70dp" app:layout_constraintStart_toStartOf="@+id/player3"/>
     <Button
             android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/load_match"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="5dp"
+            app:layout_constraintEnd_toEndOf="@+id/player3"
+            android:layout_marginTop="10dp"
             app:layout_constraintTop_toBottomOf="@+id/start_match"
             android:background="#515151"
             android:textColor="#BCBCBC"
-            android:textSize="20sp"/>
+            android:textSize="20sp" android:visibility="invisible" app:layout_constraintStart_toStartOf="@+id/player3"/>
     <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -86,4 +76,22 @@
             app:layout_constraintStart_toEndOf="@+id/player2" app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintEnd_toStartOf="@+id/player4" app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="47dp" android:textColor="#BCBCBC" android:textSize="20sp"/>
+    <!-- Usage of Switch is okm here, as we are using Android API version 14+-->
+    <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/Switch_Single_Double"
+            app:layout_constraintStart_toStartOf="@+id/player1" app:layout_constraintTop_toBottomOf="@+id/player1"
+            android:textColor="#BCBCBC" android:textSize="20sp"
+            android:layout_marginTop="70dp"
+            tools:ignore="UseSwitchCompatOrMaterialXml"
+            app:layout_constraintEnd_toEndOf="@+id/player1"
+            android:text="@string/single"/>
+    <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/Switch_Tournament_Team"
+            app:layout_constraintStart_toStartOf="@+id/player1"
+            app:layout_constraintTop_toBottomOf="@+id/Switch_Single_Double"
+            android:layout_marginTop="10dp" android:textColor="#BCBCBC" android:textSize="20sp"
+            android:text="@string/tournament_game" tools:ignore="UseSwitchCompatOrMaterialXml"
+            app:layout_constraintEnd_toEndOf="@+id/player1"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

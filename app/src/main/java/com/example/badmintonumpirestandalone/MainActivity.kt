@@ -34,7 +34,10 @@ class MainActivity : AppCompatActivity() {
 
         val matchString = sharedPreferences.getString(Utils.PREFERENCESMATCHKEY, "")
         val loadMatchObject = Match.fromSerializedString(matchString!!)
-        if (loadMatchObject != null) {
+
+        // if there is a matchobject with at least one set, then load it
+        // if no set is present, the match was not started and we cannot load it
+        if (loadMatchObject != null && loadMatchObject.sets.isNotEmpty()) {
             load_match.isVisible = true
             load_match.text = "${resources.getString(R.string.load_existing_match)}:\n\n" +
                     "${loadMatchObject.printTeamA()} ${resources.getString(R.string.vs)} ${loadMatchObject.printTeamB()}\n" +
@@ -48,11 +51,15 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        single_double.setOnClickListener {
-            single = !single
+        Switch_Single_Double.setOnCheckedChangeListener { _, isChecked ->
+            single = !isChecked
             player2.isVisible = !single
             player4.isVisible = !single
-            single_double.text = if (!single) getString(R.string.single) else getString(R.string.double_match)
+            Switch_Single_Double.text = if (single) getString(R.string.single) else getString(R.string.double_match)
+        }
+
+        Switch_Tournament_Team.setOnCheckedChangeListener { _, isChecked ->
+            Switch_Tournament_Team.text = if (isChecked) getString(R.string.team_game) else getString(R.string.tournament_game)
         }
 
         start_match.setOnClickListener {

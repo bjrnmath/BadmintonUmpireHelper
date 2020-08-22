@@ -81,12 +81,16 @@ class MatchActivity : AppCompatActivity() {
 
             undo.setOnClickListener {
                 undo(match)
-                storeMatch(editor, match)
+                // if the last set was deleted, we would go back to the serve-side selection screen
+                // in this case we want to keep a match with the already done selection to load it if the app crashes
+                if (match.sets.isNotEmpty()) {
+                    storeMatch(editor, match)
+                }
             }
         }
     }
     private fun showSetState(match: Match) {
-        if (match.isSetEnd()) {
+        if (match.isSetNotEnd()) {
             drawPlayerNamesAndPoints(match)
         } else {
             if (match.nextSetExists()) {
@@ -127,7 +131,11 @@ class MatchActivity : AppCompatActivity() {
         editor: SharedPreferences.Editor,
         match: Match
     ) {
-        editor.putString(Utils.PREFERENCESMATCHKEY, match.toSerializedString()).apply()
+        if (match.isFinished()) {
+            editor.remove(Utils.PREFERENCESMATCHKEY).apply()
+        } else {
+            editor.putString(Utils.PREFERENCESMATCHKEY, match.toSerializedString()).apply()
+        }
     }
 
     override fun onBackPressed() {
