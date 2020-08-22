@@ -5,10 +5,14 @@ This Android app is designed to be used by badminton umpires to count a match on
 It has a German and English language support.
 Also, no internet connection is required, this application runs completely independent on the phone.
 
-
 # WIP
 This app is currently work in progress! Expect errors and failures.
 Currently, the app is only manually tested, automated tests are planned for the near future.
+
+# Download
+
+You can download the APK from [here](https://github.com/bjrnmath/BadmintonUmpireHelper/raw/publication/Badminton-Umpire-Helper.apk).
+
 
 # Screenshots (German Language)
 
