@@ -31,3 +31,6 @@ jobs:
       with:
         name: Badminton-Umpire-Helper.apk
         path: app/build/outputs/apk/release/app-release.apk
+    - name: Push to Publication Branch
+      run: |
+        sh publish.sh
