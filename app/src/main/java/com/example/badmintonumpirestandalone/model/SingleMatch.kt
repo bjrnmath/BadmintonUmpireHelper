@@ -1,6 +1,12 @@
 package com.example.badmintonumpirestandalone.model
 
-class SingleMatch(playerTeamA: List<String>, playerTeamB: List<String>): Match(playerTeamA, playerTeamB){
+class SingleMatch(
+    playerTeamA: List<String>,
+    playerTeamB: List<String>,
+    teamMatch: Boolean,
+    teamA: String,
+    teamB: String
+): Match(playerTeamA, playerTeamB, teamMatch, teamA, teamB){
 
     override fun printTeamA(): String {
         return playerTeamA[0]
@@ -31,6 +37,22 @@ class SingleMatch(playerTeamA: List<String>, playerTeamB: List<String>): Match(p
     override fun printStartWording(format: String): String {
         // TODO add existence checks and do proper error handling here
         val set = sets[0]
-        return format.format(getPlayerNameFrom(set.playerRightEven), getPlayerNameFrom(set.playerLeftEven), getPlayerNameFrom(set.points[0].serve))
+        return format.format(
+            getPlayerNameFrom(set.playerRightEven),
+            getPlayerNameFrom(set.playerLeftEven),
+            getPlayerNameFrom(set.points[0].serve)
+        )
+    }
+
+    override fun printStartWordingTeam(format: String): String {
+        // TODO add existence checks and do proper error handling here
+        val set = sets[0]
+        return format.format(
+            teamRight(),
+            getPlayerNameFrom(set.playerRightEven),
+            teamLeft(),
+            getPlayerNameFrom(set.playerLeftEven),
+            getPlayerNameFrom(set.points[0].serve)
+        )
     }
 }

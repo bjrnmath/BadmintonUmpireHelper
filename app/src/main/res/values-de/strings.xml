@@ -2,6 +2,7 @@
     <string name="app_name">Badminton Umpire Helper</string>
     <string name="player_1">Spieler 1</string>
     <string name="player_2">Spieler 2</string>
+    <string name="team">Mannschaft</string>
     <string name="start_match">Spiel Starten</string>
     <string name="single">Einzel</string>
     <string name="double_match">Doppel</string>
@@ -24,6 +25,15 @@
     </string>
     <string name="match_start_wording_double_non_team">
         Meine Damen und Herren: zu meiner Rechten %s und %s, und zu meiner Linken %s und %s.
+        %s schlägt auf zu %s. Null beide.
+        Bitte spielen.
+    </string>
+    <string name="match_start_wording_single_team">
+        Meine Damen und Herren: zu meiner Rechten %s, vertreten durch %s, und zu meiner Linken %s, vertreten durch %s. %s schlägt auf. Null beide.
+        Bitte spielen.
+    </string>
+    <string name="match_start_wording_double_team">
+        Meine Damen und Herren: zu meiner Rechten %s, vertreten durch %s und %s, und zu meiner Linken %s, vertreten durch %s und %s.
         %s schlägt auf zu %s. Null beide.
         Bitte spielen.
     </string>

@@ -15,7 +15,14 @@ enum class PlayerIDs {
     UNDEF
 }
 
-abstract class Match(val playerTeamA: List<String>, val playerTeamB: List<String>): Serializable {
+abstract class Match(
+    val playerTeamA: List<String>,
+    val playerTeamB: List<String>,
+    val teamMatch: Boolean,
+    val teamAName: String,
+    val teamBName: String
+
+): Serializable {
     var sets = mutableListOf<MatchSet>()
     val fieldNumber = 1 //TODO in future this needs to be set
 
@@ -24,6 +31,10 @@ abstract class Match(val playerTeamA: List<String>, val playerTeamB: List<String
     abstract fun printTeamB(): String
     abstract fun printTeamBPretty(and: String): String
     abstract fun printStartWording(format: String): String
+    abstract fun printStartWordingTeam(format: String): String
+
+    fun teamLeft() = if (this.currentSet().teamARight) teamBName else teamAName
+    fun teamRight() = if (this.currentSet().teamARight) teamAName else teamBName
 
     /**
      * For a new match the number of sets must be 1 and the current points must be 0 on both sides.
@@ -173,7 +184,16 @@ abstract class Match(val playerTeamA: List<String>, val playerTeamB: List<String
     }
 
     private fun printWinnerTeamPretty(winnerA: Boolean, and: String) =
-        if (winnerA) printTeamAPretty(and) else printTeamBPretty(and)
+        if (winnerA)
+            if (teamMatch)
+                teamAName
+            else
+                printTeamAPretty(and)
+        else
+            if (teamMatch)
+                teamBName
+            else
+                printTeamBPretty(and)
 
     fun nextSetAnnounce(nextSetAnnounce: String, and: String): CharSequence? {
         val winnerA = isWinnerA(currentSet())

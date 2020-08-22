@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private var single = true
+    private var teamMatch = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +60,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         Switch_Tournament_Team.setOnCheckedChangeListener { _, isChecked ->
+            teamMatch = isChecked
+            teamA_name.isVisible = teamMatch
+            teamB_name.isVisible = teamMatch
             Switch_Tournament_Team.text = if (isChecked) getString(R.string.team_game) else getString(R.string.tournament_game)
         }
 
@@ -66,11 +70,13 @@ class MainActivity : AppCompatActivity() {
             val match = if (single) {
                 val teamA = listOf(player1.text.toString())
                 val teamB = listOf(player3.text.toString())
-                SingleMatch(teamA, teamB)
+                SingleMatch(teamA, teamB, Switch_Tournament_Team.isChecked,
+                    teamA_name.text.toString(), teamB_name.text.toString())
             } else {
                 val teamA = listOf(player1.text.toString(), player2.text.toString())
                 val teamB = listOf(player3.text.toString(), player4.text.toString())
-                DoubleMatch(teamA, teamB)
+                DoubleMatch(teamA, teamB, Switch_Tournament_Team.isChecked,
+                    teamA_name.text.toString(), teamB_name.text.toString())
             }
             val intent = Intent(this, SelectServeActivity::class.java).apply {
                 putExtra("match", match)

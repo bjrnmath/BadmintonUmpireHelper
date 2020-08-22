@@ -118,11 +118,19 @@ class MatchActivity : AppCompatActivity() {
             if (match is SingleMatch) {
                 drawPlayerNamesAndPoints(match)
                 announce.text =
-                    match.printStartWording(resources.getString(R.string.match_start_wording_single_non_team))
+                    if (match.teamMatch) {
+                        match.printStartWordingTeam(resources.getString(R.string.match_start_wording_single_team))
+                    } else {
+                        match.printStartWording(resources.getString(R.string.match_start_wording_single_non_team))
+                    }
             } else {
                 drawPlayerNamesAndPoints(match)
                 announce.text =
-                    match.printStartWording(resources.getString(R.string.match_start_wording_double_non_team))
+                    if (match.teamMatch) {
+                        match.printStartWordingTeam(resources.getString(R.string.match_start_wording_double_team))
+                    } else {
+                        match.printStartWording(resources.getString(R.string.match_start_wording_double_non_team))
+                    }
             }
         }
     }
