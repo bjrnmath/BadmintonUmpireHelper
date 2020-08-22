@@ -358,7 +358,11 @@ class MatchActivity : AppCompatActivity() {
                 next_set_selection.background.alpha = 255
                 point_left.isVisible = true
                 point_right.isVisible = true
-                announce.text = resources.getString(R.string.announce_after_set_middle_break)
+                announce.text = resources.getString(R.string.announce_after_set_middle_break).format(match.getCurrentPointsString(
+                    resources.getString(R.string.both),
+                    resources.getString(R.string.setpoint),
+                    resources.getString(R.string.matchpoint)
+                ))
             }
         }
     }

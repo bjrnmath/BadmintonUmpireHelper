@@ -54,6 +54,6 @@
     <string name="click_for_start">Click for start.</string>
     <string name="start_soon_announce">Court %d 20 seconds. Court %d 20 seconds.</string>
     <string name="please_choose_serve_accept">For starting the new set please select server and receiver.</string>
-    <string name="announce_after_set_middle_break">11 – 0. Play.</string>
+    <string name="announce_after_set_middle_break">%s. Play.</string>
     <string name="load_existing_match">Load saved game</string>
 </resources>
