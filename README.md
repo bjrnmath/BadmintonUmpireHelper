@@ -1,3 +1,5 @@
+![Android CI](https://github.com/bjrnmath/BadmintonUmpireHelper/workflows/Android%20CI/badge.svg?branch=master)
+
 # BadmintonUmpireHelper
 This Android app is designed to be used by badminton umpires to count a match on their phone or tablet.
 It has a German and English language support.
