@@ -56,4 +56,7 @@
     <string name="please_choose_serve_accept">For starting the new set please select server and receiver.</string>
     <string name="announce_after_set_middle_break">%s. Play.</string>
     <string name="load_existing_match">Load saved game</string>
+    <string name="exceptional_event">Incident</string>
+    <string name="back">Back</string>
+    <string name="save">Save</string>
 </resources>

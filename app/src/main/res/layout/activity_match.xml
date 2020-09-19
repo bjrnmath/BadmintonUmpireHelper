@@ -193,6 +193,16 @@
             android:layout_marginLeft="10dp" android:layout_marginStart="10dp"
     />
     <Button
+            android:text="@string/exceptional_event"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp" android:id="@+id/incident"
+            android:textSize="30sp" android:textStyle="bold"
+            android:background="#515151" android:textColor="#BCBCBC"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/court_top"
+            android:layout_marginEnd="10dp" app:layout_constraintEnd_toEndOf="parent"/>
+    <Button
             android:text="@string/plus_one"
             android:layout_width="100dp"
             android:layout_height="0dp" android:id="@+id/point_right"
@@ -314,6 +324,53 @@
                     android:layout_marginTop="165dp"
                     app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+    <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp" android:id="@+id/exceptional_events"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="invisible" android:background="#202020" app:layout_constraintTop_toTopOf="@+id/net"
+            app:layout_constraintBottom_toBottomOf="@+id/net">
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <Spinner
+                    android:layout_width="0dp"
+                    android:layout_height="48dp" android:id="@+id/incident_selection"
+                    app:layout_constraintTop_toBottomOf="@+id/back"
+                    app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="10dp"/>
+            <Spinner
+                    android:layout_width="0dp"
+                    android:layout_height="48dp" android:id="@+id/incident_details"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp" app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/incident_selection" android:layout_marginTop="10dp"
+                    android:visibility="invisible"/>
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp" android:id="@+id/back"
+                    android:text="@string/back"
+                    android:textColor="#BCBCBC"
+                    android:background="#515151" android:textSize="20sp"
+                    android:visibility="visible"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="10dp" app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="10dp"/>
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp" android:id="@+id/save"
+                    android:text="@string/save"
+                    android:textColor="#BCBCBC"
+                    android:background="#515151" android:textSize="20sp"
+                    android:visibility="visible"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp" app:layout_constraintEnd_toEndOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

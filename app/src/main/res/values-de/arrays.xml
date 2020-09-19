@@ -1,0 +1,21 @@
+<resources>
+
+    <string-array name="incidents">
+        <item>Bitte wählen</item>
+        <item>Referee</item>
+        <item>Verwarnung</item>
+        <item>Fehlerverwarnung</item>
+        <item>Disqualifikation</item>
+        <item>Aufgabe</item>
+        <item>Verletzung</item>
+        <item>Overruling</item>
+        <item>Korrektur</item>
+        <item>Wechsel der Feldseiten</item>
+        <item>Wechsel der Aufschlagpositionen</item>
+    </string-array>
+
+    <string-array name="sides">
+        <item>Linke Seite</item>
+        <item>Rechte Seite</item>
+    </string-array>
+</resources>

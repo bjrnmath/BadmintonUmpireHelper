@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -87,8 +89,70 @@ class MatchActivity : AppCompatActivity() {
                     storeMatch(editor, match)
                 }
             }
+
+            // set spinner for incident selection
+            ArrayAdapter.createFromResource(
+                this,
+                R.array.incidents,
+                android.R.layout.simple_spinner_item
+            ). also {
+                incident_selection.adapter = it
+            }
+
+            val thisActivity = this
+
+            incident_selection.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    // show players on warning, warning(error), disqualification, surrender, injury
+                    // show sides on switch serve
+                    val lout = android.R.layout.simple_spinner_item
+                    when(position) {
+                        2,3,4,5,6 -> {
+                            ArrayAdapter<String>(thisActivity, lout, match.playerTeamA + match.playerTeamB)
+                                .also { incident_details.adapter = it }
+                            incident_details.isVisible = true
+                        }
+
+                        10 -> {
+                            ArrayAdapter.createFromResource(thisActivity, R.array.sides, lout)
+                                .also { incident_details.adapter = it }
+                            incident_details.isVisible = true
+                        }
+                        else -> incident_details.isVisible = false
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    incident_details.isVisible = false
+                }
+
+            }
+
+            incident.setOnClickListener {
+                incidentButtonShow(true)
+                incident_selection.setSelection(0)
+            }
+
+            back.setOnClickListener {
+                incidentButtonShow(false)
+            }
+
+            save.setOnClickListener {
+                incidentButtonShow(false)
+                // TODO also save to the match according to the state of the selection
+            }
         }
     }
+
+    private fun incidentButtonShow(showIncident: Boolean) {
+        exceptional_events.isVisible = showIncident
+        exceptional_events.background.alpha = 255
+        point_left.isVisible = !showIncident
+        point_right.isVisible = !showIncident
+        undo.isVisible = !showIncident
+        incident.isVisible = !showIncident
+    }
+
     private fun showSetState(match: Match) {
         if (match.isSetNotEnd()) {
             drawPlayerNamesAndPoints(match)
