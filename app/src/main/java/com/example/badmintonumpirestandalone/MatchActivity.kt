@@ -106,14 +106,26 @@ class MatchActivity : AppCompatActivity() {
                     // show players on warning, warning(error), disqualification, surrender, injury
                     // show sides on switch serve
                     val lout = android.R.layout.simple_spinner_item
-                    when(position) {
-                        2,3,4,5,6 -> {
+
+                    val pos =  if (position > Incidents.values().size) {
+                        throw IllegalStateException("The position $position does not represent an incident. " +
+                                "Check values/arrays.xml string-array incidents, it should match the size and position" +
+                                "of the enum Incidents.")
+                    } else {
+                        Incidents.values()[position]
+                    }
+                    when(pos) {
+                        Incidents.WARNING,
+                        Incidents.WARNING_ERROR,
+                        Incidents.DISQUALIFICATION,
+                        Incidents.SURRENDER,
+                        Incidents.INJURY -> {
                             ArrayAdapter<String>(thisActivity, lout, match.playerTeamA + match.playerTeamB)
                                 .also { incident_details.adapter = it }
                             incident_details.isVisible = true
                         }
 
-                        10 -> {
+                        Incidents.SWITCH_SERVE -> {
                             ArrayAdapter.createFromResource(thisActivity, R.array.sides, lout)
                                 .also { incident_details.adapter = it }
                             incident_details.isVisible = true
@@ -130,7 +142,7 @@ class MatchActivity : AppCompatActivity() {
 
             incident.setOnClickListener {
                 incidentButtonShow(true)
-                incident_selection.setSelection(0)
+                incident_selection.setSelection(Incidents.CHOOSE.ordinal)
             }
 
             back.setOnClickListener {
