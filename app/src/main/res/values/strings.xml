@@ -50,7 +50,7 @@
     <string name="second_set_end">Game. Second game won by %s %s. One game all.</string>
     <string name="second_set_start">Second game. Love all. Play.</string>
     <string name="third_set_start">Final game. Love all. Play.</string>
-    <string name="seconds_left">sedconds remaining.</string>
+    <string name="seconds_left">seconds remaining.</string>
     <string name="click_for_start">Click for start.</string>
     <string name="start_soon_announce">Court %d 20 seconds. Court %d 20 seconds.</string>
     <string name="please_choose_serve_accept">For starting the new set please select server and receiver.</string>
