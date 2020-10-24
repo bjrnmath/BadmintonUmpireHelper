@@ -12,5 +12,9 @@ enum class Incidents {
     OVERRULING,
     CORRECTION,
     SWITCH_FIELD,
-    SWITCH_SERVE
+    SWITCH_SERVE;
+
+    fun isMatchEndIncident(): Boolean {
+        return this == INJURY || this == SURRENDER || this == DISQUALIFICATION
+    }
 }

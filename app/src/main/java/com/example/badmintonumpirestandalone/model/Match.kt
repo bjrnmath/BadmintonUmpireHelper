@@ -2,7 +2,7 @@ package com.example.badmintonumpirestandalone.model
 
 import android.util.Base64
 import android.util.Base64.encodeToString
-import android.util.Pair
+import kotlin.Pair
 import java.io.*
 
 
@@ -42,8 +42,14 @@ abstract class Match(
     fun isNewMatch() = (this.sets.size <= 1) &&
             (this.currentSet().getCurrentPointsLeft() == 0) &&
             (this.currentSet().getCurrentPointsRight() == 0)
-    fun isSetNotEnd() = currentSet().checkEnd()
-    fun isFinished() = !(isSetNotEnd() || isNewMatch())
+    fun isSetNotEnd() = currentSet().checkEnd() && !isSetGivenUp()
+
+    /**
+     * Checks if the set is over because one player was injured, surrendered or was disqualified
+     */
+    fun isSetGivenUp() = currentSet().points.last().incidents.firstOrNull { it.first.isMatchEndIncident() } != null
+
+    fun isFinished() = !(isSetNotEnd() || isNewMatch()) || isSetGivenUp()
 
     infix fun getPlayerNameFrom(player: PlayerIDs) = when(player) {
         PlayerIDs.TEAMAPLAYER1 -> playerTeamA[0]
@@ -63,7 +69,7 @@ abstract class Match(
                         (sets.all { it.points.last().pointA > it.points.last().pointB} ||
                         sets.all { it.points.last().pointB > it.points.last().pointA}) ||
                 sets.size == 3)
-                )
+                ) && !isSetGivenUp()
     }
 
     fun startNextSet(serve: PlayerIDs, accept: PlayerIDs) {
@@ -130,6 +136,10 @@ abstract class Match(
     }
 
     fun undo(): Boolean {
+        if (currentSet().points.last().incidents.size > 0) {
+            currentSet().points.last().incidents.clear()
+            return true
+        }
         if (currentSet().points.size > 1) {
             currentSet().undo()
             return true
@@ -148,6 +158,11 @@ abstract class Match(
     abstract fun addPointLeft()
     abstract fun addPointRight()
 
+    /**
+     * Returns the playerID based on the given number. For double matches there are 4 numbers, for singles only 2.
+     */
+    abstract fun getPlayerFromNumber(number: Int): PlayerIDs
+
     fun swapSidesIfNecessary() {
         if (sets.size == 3 && currentSet().isBreak()) {
             currentSet().swapSides()
@@ -155,14 +170,31 @@ abstract class Match(
     }
 
     private fun isWinnerA():Boolean {
-        return sets.filter {
-            isWinnerA(it)
-        }.count() >= 2
+        return if (!isSetGivenUp()) {
+            sets.filter {
+                isWinnerA(it)
+            }.count() >= 2
+        } else {
+            val endMatchIncident = currentSet().points.last().incidents.first { it.first.isMatchEndIncident() }
+            !isTeamA(endMatchIncident.second)
+        }
+
+
     }
 
     private fun isWinnerA(currentSet: MatchSet) =
         currentSet.teamARight && currentSet.getCurrentPointsRight() > currentSet.getCurrentPointsLeft() ||
                 !currentSet.teamARight && currentSet.getCurrentPointsRight() < currentSet.getCurrentPointsLeft()
+
+    fun printGivenUp(givenUpString: String, disqualificationString: String): String {
+        val gameEndIncident = currentSet().points.last().incidents.first { it.first.isMatchEndIncident() }
+        val playerName = getPlayerNameFrom(gameEndIncident.second)
+        return if (gameEndIncident.first == Incidents.SURRENDER || gameEndIncident.first == Incidents.INJURY) {
+            givenUpString.format(playerName)
+        } else {
+            disqualificationString.format(playerName)
+        }
+    }
 
     fun printWinWording(string: String, and: String): CharSequence? {
         val winnerA = isWinnerA()
@@ -201,6 +233,24 @@ abstract class Match(
             printWinnerTeamPretty(winnerA, and),
             printWinnerPointsPretty(winnerA, currentSet())
         )
+    }
+
+    /**
+     * Stores the given incident.
+     */
+    fun saveIncident(incident: Incidents, detail: Int) {
+        if (incident == Incidents.WARNING_ERROR) {
+            val playerID = getPlayerFromNumber(detail)
+            if (isTeamA(playerID) && currentSet().teamARight || !isTeamA(playerID) && !currentSet().teamARight) {
+                addPointLeft()
+            } else {
+                addPointRight()
+            }
+        }
+        if (incident != Incidents.CHOOSE) {
+            val lastPoint = currentSet().points.last()
+            lastPoint.incidents.add(Pair(incident, getPlayerFromNumber(detail)))
+        }
     }
 
     fun toSerializedString(): String {

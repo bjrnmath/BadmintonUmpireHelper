@@ -38,6 +38,10 @@ class DoubleMatch(
         swapSidesIfNecessary()
     }
 
+    override fun getPlayerFromNumber(number: Int): PlayerIDs {
+        return if (number < PlayerIDs.values().size) {PlayerIDs.values()[number]} else {PlayerIDs.UNDEF}
+    }
+
     override fun printStartWording(format: String): String {
         // TODO add existence checks and do proper error handling here
         val set = sets[0]

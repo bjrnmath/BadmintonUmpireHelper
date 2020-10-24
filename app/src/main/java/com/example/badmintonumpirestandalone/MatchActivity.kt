@@ -150,7 +150,10 @@ class MatchActivity : AppCompatActivity() {
             }
 
             save.setOnClickListener {
+                match.saveIncident(Incidents.values()[incident_selection.selectedItemPosition], incident_details.selectedItemPosition)
                 incidentButtonShow(false)
+                showSetState(match)
+                storeMatch(editor, match)
                 // TODO also save to the match according to the state of the selection
             }
         }
@@ -385,10 +388,17 @@ class MatchActivity : AppCompatActivity() {
     }
 
     private fun showEndGame(match: Match) {
-        announce.text = match.printWinWording(
-            resources.getString(R.string.win_wording_non_team),
-            resources.getString(R.string.and)
-        )
+        if (match.isSetGivenUp()) {
+            announce.text = match.printGivenUp(
+                resources.getString(R.string.win_wording_given_up),
+                resources.getString(R.string.win_wording_disqualification)
+            )
+        } else {
+            announce.text = match.printWinWording(
+                resources.getString(R.string.win_wording_non_team),
+                resources.getString(R.string.and)
+            )
+        }
         point_left.isClickable = false
         point_right.isClickable = false
         point_left.alpha = 0.5f

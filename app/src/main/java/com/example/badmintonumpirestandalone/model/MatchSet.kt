@@ -3,7 +3,9 @@ package com.example.badmintonumpirestandalone.model
 import java.io.Serializable
 import kotlin.math.abs
 
-data class SetPoint(val pointA: Int, val pointB: Int, val serve: PlayerIDs, val accept: PlayerIDs): Serializable
+data class SetPoint(val pointA: Int, val pointB: Int, val serve: PlayerIDs, val accept: PlayerIDs): Serializable {
+    val incidents = mutableListOf<Pair<Incidents, PlayerIDs>>()
+}
 
 class MatchSet( private val match: Match,
                 serve: PlayerIDs,

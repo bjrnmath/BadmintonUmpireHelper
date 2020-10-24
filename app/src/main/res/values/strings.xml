@@ -46,6 +46,8 @@
     <string name="undo">Undo</string>
     <string name="and">and</string>
     <string name="win_wording_non_team">Game. Match won by %s %s.</string>
+    <string name="win_wording_given_up">%s surrendered.</string>
+    <string name="win_wording_disqualification">%s was disqualified.</string>
     <string name="first_set_end">Game. First game won by %s %s.</string>
     <string name="second_set_end">Game. Second game won by %s %s. One game all.</string>
     <string name="second_set_start">Second game. Love all. Play.</string>
