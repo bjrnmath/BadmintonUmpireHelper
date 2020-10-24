@@ -61,4 +61,6 @@
     <string name="exceptional_event">Incident</string>
     <string name="back">Back</string>
     <string name="save">Save</string>
+    <string name="warning">%s warning because of unsportsmanlike behavior.</string>
+    <string name="warning_error">%s fault because of unsportsmanlike behavior.</string>
 </resources>

@@ -263,7 +263,8 @@ class MatchActivity : AppCompatActivity() {
         // for single matches it is clear who serves and accepts
         drawPlayerNamesAndPoints(match)
         val setStartAnnounce = if (match.sets.size == 1) R.string.first_set_end else R.string.second_set_end
-        announce.text = match.nextSetAnnounce(resources.getString(setStartAnnounce), resources.getString(R.string.and))
+        announce.text =
+            match.printWarningString(resources.getString(R.string.warning), resources.getString(R.string.warning_error)) + match.nextSetAnnounce(resources.getString(setStartAnnounce), resources.getString(R.string.and))
         if (match is DoubleMatch) {
             val winner = match.getSetWinner()
             val loser = match.getSetLoser()
@@ -394,7 +395,7 @@ class MatchActivity : AppCompatActivity() {
                 resources.getString(R.string.win_wording_disqualification)
             )
         } else {
-            announce.text = match.printWinWording(
+            announce.text = match.printWarningString(resources.getString(R.string.warning), resources.getString(R.string.warning_error)) + match.printWinWording(
                 resources.getString(R.string.win_wording_non_team),
                 resources.getString(R.string.and)
             )
@@ -455,6 +456,7 @@ class MatchActivity : AppCompatActivity() {
 
     private fun buildAnnounceText(match: Match): String {
         val announceBuilder = StringBuilder()
+        announceBuilder.append(match.printWarningString(resources.getString(R.string.warning), resources.getString(R.string.warning_error)))
         if (match.currentSet().serveChanged()) {
             announceBuilder.append("${resources.getString(R.string.serve_change)} ")
         }

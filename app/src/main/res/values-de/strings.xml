@@ -61,4 +61,6 @@
     <string name="back">Zurück</string>
     <string name="exceptional_event">Vorkommnis</string>
     <string name="save">Speichern</string>
+    <string name="warning">%s Verwarnung wegen unsportlichen Verhaltens.</string>
+    <string name="warning_error">%s Fehler wegen unsportlichen Verhaltens.</string>
 </resources>

@@ -59,6 +59,24 @@ abstract class Match(
         else -> throw IllegalStateException("Requested player is undefined.")
     }
 
+    fun printWarningString(warning: String, warning_fault: String): String {
+        val incidents = currentSet().points.last().incidents
+        return if (incidents.isNotEmpty()) {
+            val lastIncident = incidents.last()
+            if (lastIncident.first == Incidents.WARNING) {
+                "${warning.format(getPlayerNameFrom(lastIncident.second))} "
+            } else {
+                if (lastIncident.first == Incidents.WARNING_ERROR) {
+                    "${warning_fault.format(getPlayerNameFrom(lastIncident.second))} "
+                } else {
+                    ""
+                }
+            }
+        } else {
+            ""
+        }
+    }
+
     /**
      * Returns true if based on the current points a next set is possible, even if the current set is not yet finished.
      */
