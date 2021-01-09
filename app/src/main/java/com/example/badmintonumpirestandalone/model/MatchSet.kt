@@ -56,13 +56,13 @@ class MatchSet( private val match: Match,
     fun getCurrentPointsRight() = if (teamARight) points.last().pointA else points.last().pointB
     fun isServeLeft() =
         (match.isTeamA(points.last().serve) && !teamARight) || (!match.isTeamA(points.last().serve) && teamARight)
-    fun isBreak() = points.size > 1 && (getCurrentPointsLeft() == Utils.SETMIDDLE || getCurrentPointsRight() == Utils.SETMIDDLE) &&
-            points[points.size - 2].pointA < Utils.SETMIDDLE && points[points.size - 2].pointB < Utils.SETMIDDLE
+    fun isBreak() = points.size > 1 && (getCurrentPointsLeft() == Utils.currentGameSetMiddle() || getCurrentPointsRight() == Utils.currentGameSetMiddle()) &&
+            points[points.size - 2].pointA < Utils.currentGameSetMiddle() && points[points.size - 2].pointB < Utils.currentGameSetMiddle()
     private fun isSetNearEnd() = points.size > 1 &&
             //set near end either happens at Utils.SETNEAREND once or at Utils.SETNEAREND2 always
-            ((getCurrentPointsLeft() == Utils.SETNEAREND || getCurrentPointsRight() == Utils.SETNEAREND) &&
-            points[points.size - 2].pointA < Utils.SETNEAREND && points[points.size - 2].pointB < Utils.SETNEAREND ||
-            (getCurrentPointsLeft() == Utils.SETNEAREND2 || getCurrentPointsRight() == Utils.SETNEAREND2))
+            ((getCurrentPointsLeft() == Utils.currentGameSetNearEnd() || getCurrentPointsRight() == Utils.currentGameSetNearEnd()) &&
+            points[points.size - 2].pointA < Utils.currentGameSetNearEnd() && points[points.size - 2].pointB < Utils.currentGameSetNearEnd() ||
+            (getCurrentPointsLeft() == Utils.currentGameSetNearEnd2() || getCurrentPointsRight() == Utils.currentGameSetNearEnd2()))
 
     /**
      * Returns true if the set is not finished yet, i.e. no team won by now.
@@ -175,9 +175,9 @@ class MatchSet( private val match: Match,
     fun checkEnd(): Boolean {
         val state = points.last()
 
-        return !(((state.pointA >= Utils.SETSTANDARD || state.pointB >= Utils.SETSTANDARD) &&
+        return !(((state.pointA >= Utils.currentGameSetStandard || state.pointB >= Utils.currentGameSetStandard) &&
                 abs(state.pointA - state.pointB) >= 2) ||
-                (state.pointA >= Utils.SETMAX || state.pointB >= Utils.SETMAX))
+                (state.pointA >= Utils.currentGameSetMax || state.pointB >= Utils.currentGameSetMax))
     }
 
     private fun switchLeft() {
@@ -262,7 +262,7 @@ class MatchSet( private val match: Match,
     }
 
     fun undo() {
-        if (isBreak() && match.sets.size > 2) {
+        if (isBreak() && match.sets.size >= Utils.currentGameWinnerSetCount()) {
             // undo the side swapping by swapping sides again
             swapSides()
         }

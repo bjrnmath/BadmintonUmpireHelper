@@ -84,10 +84,10 @@ abstract class Match(
     fun nextSetExists(): Boolean {
         // either in two sets one team was winning or it is the third set
         return !(
-                (sets.size == 2 &&
+                (sets.size >= Utils.currentGameWinnerSetCount() &&
                         (sets.all { it.points.last().pointA > it.points.last().pointB} ||
                         sets.all { it.points.last().pointB > it.points.last().pointA}) ||
-                sets.size == 3)
+                sets.size == Utils.currentGameMaxSetCount)
                 ) && !isSetGivenUp()
     }
 
@@ -183,7 +183,7 @@ abstract class Match(
     abstract fun getPlayerFromNumber(number: Int): PlayerIDs
 
     fun swapSidesIfNecessary() {
-        if (sets.size == 3 && currentSet().isBreak()) {
+        if (sets.size == Utils.currentGameMaxSetCount && currentSet().isBreak()) {
             currentSet().swapSides()
         }
     }
@@ -192,7 +192,7 @@ abstract class Match(
         return if (!isSetGivenUp()) {
             sets.filter {
                 isWinnerA(it)
-            }.count() >= 2
+            }.count() >= Utils.currentGameWinnerSetCount()
         } else {
             val endMatchIncident = currentSet().points.last().incidents.first { it.first.isMatchEndIncident() }
             !isTeamA(endMatchIncident.second)
@@ -288,6 +288,16 @@ abstract class Match(
         val incidents = StringBuilder()
         sets.forEach { incidents.append(it.listIncidents(incidentStrings)) }
         return incidents.toString()
+    }
+
+    /**
+     * Checks if based on the current points and sets both teams have equally won sets.
+     */
+    fun isEqualSets(): Boolean {
+        var winnerA = 0
+        var winnerB = 0
+        sets.forEach { if (isWinnerA(it)) {winnerA++} else {winnerB++} }
+        return winnerA == winnerB
     }
 
     companion object {

@@ -116,4 +116,12 @@
             android:layout_marginTop="10dp" android:textColor="#BCBCBC" android:textSize="20sp"
             android:text="@string/tournament_game" tools:ignore="UseSwitchCompatOrMaterialXml"
             app:layout_constraintEnd_toEndOf="@+id/player1"/>
+    <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/Switch_Counting"
+            app:layout_constraintStart_toStartOf="@+id/player1"
+            android:textColor="#BCBCBC" android:textSize="20sp"
+            android:text="@string/twentyone_points" tools:ignore="UseSwitchCompatOrMaterialXml"
+            app:layout_constraintEnd_toEndOf="@+id/player1"
+            app:layout_constraintTop_toBottomOf="@+id/Switch_Tournament_Team" android:layout_marginTop="10dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
