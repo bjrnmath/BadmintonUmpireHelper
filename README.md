@@ -9,6 +9,12 @@ Also, no internet connection is required, this application runs completely indep
 This app is currently work in progress! Expect errors and failures.
 Currently, the app is only manually tested, automated tests are planned for the near future.
 
+## TODO's
+
+- Add tests for different scenarios to ensure correct behavior of the program automatically (including future updates 
+Kotlin, Android, and Dependencies).
+- Refactoring of the code to get rid of some mess that was caused along the way.
+
 # Download
 
 You can download the APK from [here](https://github.com/bjrnmath/BadmintonUmpireHelper/raw/publication/Badminton-Umpire-Helper.apk).
