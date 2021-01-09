@@ -46,14 +46,21 @@
     <string name="undo">Undo</string>
     <string name="and">and</string>
     <string name="win_wording_non_team">Game. Match won by %s %s.</string>
+    <string name="win_wording_given_up">%s surrendered.</string>
+    <string name="win_wording_disqualification">%s was disqualified.</string>
     <string name="first_set_end">Game. First game won by %s %s.</string>
     <string name="second_set_end">Game. Second game won by %s %s. One game all.</string>
     <string name="second_set_start">Second game. Love all. Play.</string>
     <string name="third_set_start">Final game. Love all. Play.</string>
-    <string name="seconds_left">sedconds remaining.</string>
+    <string name="seconds_left">seconds remaining.</string>
     <string name="click_for_start">Click for start.</string>
     <string name="start_soon_announce">Court %d 20 seconds. Court %d 20 seconds.</string>
     <string name="please_choose_serve_accept">For starting the new set please select server and receiver.</string>
     <string name="announce_after_set_middle_break">%s. Play.</string>
     <string name="load_existing_match">Load saved game</string>
+    <string name="exceptional_event">Incident</string>
+    <string name="back">Back</string>
+    <string name="save">Save</string>
+    <string name="warning">%s warning because of unsportsmanlike behavior.</string>
+    <string name="warning_error">%s fault because of unsportsmanlike behavior.</string>
 </resources>

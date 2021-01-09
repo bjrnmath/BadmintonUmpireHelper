@@ -1,0 +1,21 @@
+<resources>
+
+    <string-array name="incidents">
+        <item>Please select</item>
+        <item>Referee</item>
+        <item>Warning</item>
+        <item>Warning(error)</item>
+        <item>Disqualification</item>
+        <item>Surrender</item>
+        <item>Injury</item>
+        <item>Overruling</item>
+        <item>Correction</item>
+        <item>Switch Court Sides</item>
+        <item>Switch Serve or Accept</item>
+    </string-array>
+
+    <string-array name="sides">
+        <item>Left Side</item>
+        <item>Right Side</item>
+    </string-array>
+</resources>

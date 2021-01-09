@@ -46,6 +46,8 @@
     <string name="undo">Undo</string>
     <string name="and">und</string>
     <string name="win_wording_non_team">Satz. Das Spiel wurde gewonnen von %s mit %s.</string>
+    <string name="win_wording_given_up">%s hat aufgegeben.</string>
+    <string name="win_wording_disqualification">%s wurde disqualifiziert.</string>
     <string name="first_set_end">Satz. Der erste Satz wurde gewonnen von %s mit %s.</string>
     <string name="second_set_end">Satz. Der zweite Satz wurde gewonnen von %s mit %s. Einen Satz beide.</string>
     <string name="second_set_start">Zweiter Satz. Null beide. Bitte spielen.</string>
@@ -56,4 +58,9 @@
     <string name="please_choose_serve_accept">Zum Starten des neuen Satzes bitte zuerst Aufschläger und Rückschläger bestimmen.</string>
     <string name="announce_after_set_middle_break">%s. Bitte spielen.</string>
     <string name="load_existing_match">Lade bestehendes Spiel</string>
+    <string name="back">Zurück</string>
+    <string name="exceptional_event">Vorkommnis</string>
+    <string name="save">Speichern</string>
+    <string name="warning">%s Verwarnung wegen unsportlichen Verhaltens.</string>
+    <string name="warning_error">%s Fehler wegen unsportlichen Verhaltens.</string>
 </resources>

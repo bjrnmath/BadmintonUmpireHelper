@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -87,8 +89,86 @@ class MatchActivity : AppCompatActivity() {
                     storeMatch(editor, match)
                 }
             }
+
+            // set spinner for incident selection
+            ArrayAdapter.createFromResource(
+                this,
+                R.array.incidents,
+                android.R.layout.simple_spinner_item
+            ). also {
+                incident_selection.adapter = it
+            }
+
+            val thisActivity = this
+
+            incident_selection.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    // show players on warning, warning(error), disqualification, surrender, injury
+                    // show sides on switch serve
+                    val lout = android.R.layout.simple_spinner_item
+
+                    val pos =  if (position > Incidents.values().size) {
+                        throw IllegalStateException("The position $position does not represent an incident. " +
+                                "Check values/arrays.xml string-array incidents, it should match the size and position" +
+                                "of the enum Incidents.")
+                    } else {
+                        Incidents.values()[position]
+                    }
+                    when(pos) {
+                        Incidents.WARNING,
+                        Incidents.WARNING_ERROR,
+                        Incidents.DISQUALIFICATION,
+                        Incidents.SURRENDER,
+                        Incidents.INJURY -> {
+                            ArrayAdapter<String>(thisActivity, lout, match.playerTeamA + match.playerTeamB)
+                                .also { incident_details.adapter = it }
+                            incident_details.isVisible = true
+                        }
+
+                        Incidents.SWITCH_SERVE -> {
+                            ArrayAdapter.createFromResource(thisActivity, R.array.sides, lout)
+                                .also { incident_details.adapter = it }
+                            incident_details.isVisible = true
+                        }
+                        else -> incident_details.isVisible = false
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    incident_details.isVisible = false
+                }
+
+            }
+
+            incident.setOnClickListener {
+                incidentButtonShow(true)
+                incident_selection.setSelection(Incidents.CHOOSE.ordinal)
+                incidents_happened.text = match.listIncidents(resources.getStringArray(R.array.incidents))
+            }
+
+            back.setOnClickListener {
+                incidentButtonShow(false)
+            }
+
+            save.setOnClickListener {
+                match.saveIncident(Incidents.values()[incident_selection.selectedItemPosition], incident_details.selectedItemPosition)
+                incidentButtonShow(false)
+                showSetState(match)
+                storeMatch(editor, match)
+                // TODO also save to the match according to the state of the selection
+            }
         }
     }
+
+    private fun incidentButtonShow(showIncident: Boolean) {
+        exceptional_events.isVisible = showIncident
+        exceptional_events.background.alpha = 255
+        point_left.isVisible = !showIncident
+        point_right.isVisible = !showIncident
+        undo.isVisible = !showIncident
+        incident.isVisible = !showIncident
+    }
+
     private fun showSetState(match: Match) {
         if (match.isSetNotEnd()) {
             drawPlayerNamesAndPoints(match)
@@ -184,7 +264,8 @@ class MatchActivity : AppCompatActivity() {
         // for single matches it is clear who serves and accepts
         drawPlayerNamesAndPoints(match)
         val setStartAnnounce = if (match.sets.size == 1) R.string.first_set_end else R.string.second_set_end
-        announce.text = match.nextSetAnnounce(resources.getString(setStartAnnounce), resources.getString(R.string.and))
+        announce.text =
+            match.printWarningString(resources.getString(R.string.warning), resources.getString(R.string.warning_error)) + match.nextSetAnnounce(resources.getString(setStartAnnounce), resources.getString(R.string.and))
         if (match is DoubleMatch) {
             val winner = match.getSetWinner()
             val loser = match.getSetLoser()
@@ -309,10 +390,17 @@ class MatchActivity : AppCompatActivity() {
     }
 
     private fun showEndGame(match: Match) {
-        announce.text = match.printWinWording(
-            resources.getString(R.string.win_wording_non_team),
-            resources.getString(R.string.and)
-        )
+        if (match.isSetGivenUp()) {
+            announce.text = match.printGivenUp(
+                resources.getString(R.string.win_wording_given_up),
+                resources.getString(R.string.win_wording_disqualification)
+            )
+        } else {
+            announce.text = match.printWarningString(resources.getString(R.string.warning), resources.getString(R.string.warning_error)) + match.printWinWording(
+                resources.getString(R.string.win_wording_non_team),
+                resources.getString(R.string.and)
+            )
+        }
         point_left.isClickable = false
         point_right.isClickable = false
         point_left.alpha = 0.5f
@@ -369,6 +457,7 @@ class MatchActivity : AppCompatActivity() {
 
     private fun buildAnnounceText(match: Match): String {
         val announceBuilder = StringBuilder()
+        announceBuilder.append(match.printWarningString(resources.getString(R.string.warning), resources.getString(R.string.warning_error)))
         if (match.currentSet().serveChanged()) {
             announceBuilder.append("${resources.getString(R.string.serve_change)} ")
         }
