@@ -4,6 +4,7 @@ import android.util.Base64
 import android.util.Base64.encodeToString
 import kotlin.Pair
 import java.io.*
+import java.lang.StringBuilder
 
 
 // TODO this could possibly be handled better
@@ -267,7 +268,7 @@ abstract class Match(
         }
         if (incident != Incidents.CHOOSE) {
             val lastPoint = currentSet().points.last()
-            lastPoint.incidents.add(Pair(incident, getPlayerFromNumber(detail)))
+            lastPoint.incidents.add(Pair(incident, getPlayerFromNumber(if (detail > 0) {detail} else {0})))
         }
     }
 
@@ -281,6 +282,12 @@ abstract class Match(
 
     fun printAllPoints(): String {
         return this.sets.joinToString(separator = "\n") { "${it.points.last().pointA} - ${it.points.last().pointB}" }
+    }
+
+    fun listIncidents(incidentStrings: Array<String>): CharSequence {
+        val incidents = StringBuilder()
+        sets.forEach { incidents.append(it.listIncidents(incidentStrings)) }
+        return incidents.toString()
     }
 
     companion object {

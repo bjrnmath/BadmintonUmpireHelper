@@ -143,6 +143,7 @@ class MatchActivity : AppCompatActivity() {
             incident.setOnClickListener {
                 incidentButtonShow(true)
                 incident_selection.setSelection(Incidents.CHOOSE.ordinal)
+                incidents_happened.text = match.listIncidents(resources.getStringArray(R.array.incidents))
             }
 
             back.setOnClickListener {

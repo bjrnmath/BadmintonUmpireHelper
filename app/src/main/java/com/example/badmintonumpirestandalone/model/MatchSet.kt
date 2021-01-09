@@ -1,9 +1,37 @@
 package com.example.badmintonumpirestandalone.model
 
+import android.widget.ArrayAdapter
+import androidx.core.view.isVisible
+import com.example.badmintonumpirestandalone.R
+import kotlinx.android.synthetic.main.activity_match.*
 import java.io.Serializable
+import java.lang.StringBuilder
 import kotlin.math.abs
 
 data class SetPoint(val pointA: Int, val pointB: Int, val serve: PlayerIDs, val accept: PlayerIDs): Serializable {
+    fun listIncidents(incidentStrings: Array<String>, match: Match): String {
+        val incidents = StringBuilder()
+        this.incidents.forEach {
+            val playerName =  when(it.first) {
+                Incidents.WARNING,
+                Incidents.WARNING_ERROR,
+                Incidents.DISQUALIFICATION,
+                Incidents.SURRENDER,
+                Incidents.INJURY -> {
+                    match.getPlayerNameFrom(it.second)
+                }
+
+                Incidents.SWITCH_SERVE -> {
+                    val teamMate = match.getPlayerNameFrom(match.getTeamMate(it.second))
+                    match.getPlayerNameFrom((it.second)) + if (teamMate.isNotEmpty()) {"/$teamMate"} else {""}
+                }
+                else -> ""
+            }
+            incidents.append("${match.printTeamA()}: $pointA - ${match.printTeamB()}: $pointB ${incidentStrings[it.first.ordinal]}" + if (playerName.isNotEmpty()) {" - $playerName\n"} else "\n")
+        }
+        return incidents.toString()
+    }
+
     val incidents = mutableListOf<Pair<Incidents, PlayerIDs>>()
 }
 
@@ -251,6 +279,12 @@ class MatchSet( private val match: Match,
         playerRightEven = tmpLeftEven
         playerRightUneven = tmpLeftUneven
         teamARight = !teamARight
+    }
+
+    fun listIncidents(incidentStrings: Array<String>): String {
+        val incidents = StringBuilder()
+        points.forEach { incidents.append(it.listIncidents(incidentStrings, this.match)) }
+        return incidents.toString()
     }
 
 
