@@ -44,6 +44,11 @@ class MainActivity : AppCompatActivity() {
                     "${loadMatchObject.printTeamA()} ${resources.getString(R.string.vs)} ${loadMatchObject.printTeamB()}\n" +
                     loadMatchObject.printAllPoints()
             load_match.setOnClickListener {
+                if (sharedPreferences.getString(Utils.PREFERENCESISELEVEN, "").equals("5")) {
+                    Utils.currentGameMaxSetCount = Utils.ELEVENMAXSETCOUNT
+                    Utils.currentGameSetMax = Utils.ELEVENSETMAX
+                    Utils.currentGameSetStandard= Utils.ELEVENSETSTANDARD
+                }
                 val intent = Intent(this, MatchActivity::class.java).apply {
                     putExtra("match", loadMatchObject)
                 }
@@ -64,6 +69,19 @@ class MainActivity : AppCompatActivity() {
             teamA_name.isVisible = teamMatch
             teamB_name.isVisible = teamMatch
             Switch_Tournament_Team.text = if (isChecked) getString(R.string.team_game) else getString(R.string.tournament_game)
+        }
+
+        Switch_Counting.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                Utils.currentGameSetMax = Utils.ELEVENSETMAX
+                Utils.currentGameSetStandard = Utils.ELEVENSETSTANDARD
+                Utils.currentGameMaxSetCount = Utils.ELEVENMAXSETCOUNT
+            } else {
+                Utils.currentGameSetMax = Utils.TWENTYONESETMAX
+                Utils.currentGameSetStandard = Utils.TWENTYONESETSTANDARD
+                Utils.currentGameMaxSetCount = Utils.TWENTYONEMAXSETCOUNT
+            }
+            Switch_Counting.text = if (isChecked) getString(R.string.eleven_points) else getString(R.string.twentyone_points)
         }
 
         start_match.setOnClickListener {

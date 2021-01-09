@@ -48,10 +48,11 @@
     <string name="win_wording_non_team">Game. Match won by %s %s.</string>
     <string name="win_wording_given_up">%s surrendered.</string>
     <string name="win_wording_disqualification">%s was disqualified.</string>
-    <string name="first_set_end">Game. First game won by %s %s.</string>
-    <string name="second_set_end">Game. Second game won by %s %s. One game all.</string>
-    <string name="second_set_start">Second game. Love all. Play.</string>
-    <string name="third_set_start">Final game. Love all. Play.</string>
+    <string name="set_end">Game. %s game won by %s %s.</string>
+    <string name="set_end_equal_one">Game. %s game won by %s %s. One game all.</string>
+    <string name="set_end_equal_two">Game. %s game won by %s %s. Two games all.</string>
+    <string name="set_start">%s game. Love all. Play.</string>
+    <string name="last_set_start">Final game. Love all. Play.</string>
     <string name="seconds_left">seconds remaining.</string>
     <string name="click_for_start">Click for start.</string>
     <string name="start_soon_announce">Court %d 20 seconds. Court %d 20 seconds.</string>
@@ -63,4 +64,11 @@
     <string name="save">Save</string>
     <string name="warning">%s warning because of unsportsmanlike behavior.</string>
     <string name="warning_error">%s fault because of unsportsmanlike behavior.</string>
+    <string name="eleven_points">11 points - 5 matches</string>
+    <string name="twentyone_points">21 points - 3 matches</string>
+    <string name="new_match">New Match</string>
+    <string name="first">First</string>
+    <string name="second">Second</string>
+    <string name="third">Third</string>
+    <string name="fourth">Fourth</string>
 </resources>

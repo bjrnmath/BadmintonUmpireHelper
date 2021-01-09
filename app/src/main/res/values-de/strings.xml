@@ -48,10 +48,11 @@
     <string name="win_wording_non_team">Satz. Das Spiel wurde gewonnen von %s mit %s.</string>
     <string name="win_wording_given_up">%s hat aufgegeben.</string>
     <string name="win_wording_disqualification">%s wurde disqualifiziert.</string>
-    <string name="first_set_end">Satz. Der erste Satz wurde gewonnen von %s mit %s.</string>
-    <string name="second_set_end">Satz. Der zweite Satz wurde gewonnen von %s mit %s. Einen Satz beide.</string>
-    <string name="second_set_start">Zweiter Satz. Null beide. Bitte spielen.</string>
-    <string name="third_set_start">Entscheidungssatz. Null beide. Bitte spielen.</string>
+    <string name="set_end">Satz. Der %s Satz wurde gewonnen von %s mit %s.</string>
+    <string name="set_end_equal_one">Satz. Der %s Satz wurde gewonnen von %s mit %s. Einen Satz beide.</string>
+    <string name="set_end_equal_two">Satz. Der %s Satz wurde gewonnen von %s mit %s. Zwei Sätze beide.</string>
+    <string name="set_start">%s Satz. Null beide. Bitte spielen.</string>
+    <string name="last_set_start">Entscheidungssatz. Null beide. Bitte spielen.</string>
     <string name="seconds_left">Sekunden verbleibend.</string>
     <string name="click_for_start">Klicken für start.</string>
     <string name="start_soon_announce">Feld %d noch 20 Sekunden. Feld %d noch 20 Sekunden.</string>
@@ -63,4 +64,11 @@
     <string name="save">Speichern</string>
     <string name="warning">%s Verwarnung wegen unsportlichen Verhaltens.</string>
     <string name="warning_error">%s Fehler wegen unsportlichen Verhaltens.</string>
+    <string name="eleven_points">11 Punkte - 5 Sätze</string>
+    <string name="twentyone_points">21 Punkte - 3 Sätze</string>
+    <string name="new_match">Neues Spiel</string>
+    <string name="first">Erster</string>
+    <string name="second">Zweiter</string>
+    <string name="third">Dritter</string>
+    <string name="fourth">Vierter</string>
 </resources>

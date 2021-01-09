@@ -17,6 +17,10 @@ import androidx.security.crypto.MasterKey
 import com.example.badmintonumpirestandalone.model.*
 import kotlinx.android.synthetic.main.activity_match.*
 import kotlin.math.sqrt
+import android.content.Intent
+
+
+
 
 
 class MatchActivity : AppCompatActivity() {
@@ -223,6 +227,7 @@ class MatchActivity : AppCompatActivity() {
             editor.remove(Utils.PREFERENCESMATCHKEY).apply()
         } else {
             editor.putString(Utils.PREFERENCESMATCHKEY, match.toSerializedString()).apply()
+            editor.putString(Utils.PREFERENCESISELEVEN, Utils.currentGameMaxSetCount.toString()).apply()
         }
     }
 
@@ -260,12 +265,43 @@ class MatchActivity : AppCompatActivity() {
         }, Utils.BUTTONDELAYMILLIS)
     }
 
+    private fun preFormatMatchCount(setCount: Int, announcement: String): String {
+        val number = when(setCount) {
+            1 -> resources.getString(R.string.first)
+            2 -> resources.getString(R.string.second)
+            3 -> resources.getString(R.string.third)
+            4 -> resources.getString(R.string.fourth)
+            else -> throw IllegalStateException("Tried to access a set number that is now available.")
+        }
+        // cannot use format here as we only want to replace the first specifier with the correct String
+        return announcement.replaceFirst("%s", number)
+    }
+
     private fun startNextSetSequence(match: Match) {
         // for single matches it is clear who serves and accepts
         drawPlayerNamesAndPoints(match)
-        val setStartAnnounce = if (match.sets.size == 1) R.string.first_set_end else R.string.second_set_end
+        val setCount = match.sets.size
+        val setStartAnnounce = if (setCount + 1 < Utils.currentGameMaxSetCount) {
+            preFormatMatchCount(setCount + 1, resources.getString(R.string.set_start))
+        }
+        else {
+            resources.getString(R.string.last_set_start)
+        }
+
+        val setEndAnnounce = preFormatMatchCount(
+            setCount,
+            when(setCount) {
+                1, 3 -> resources.getString(R.string.set_end)
+                2 -> if (match.isEqualSets()) {resources.getString(R.string.set_end_equal_one)} else {resources.getString(R.string.set_end)}
+                4 -> if (match.isEqualSets()) {resources.getString(R.string.set_end_equal_two)} else {resources.getString(R.string.set_end)}
+                else -> throw IllegalStateException("Tried to access a set number that is now available.")
+            }
+        )
+
+
         announce.text =
-            match.printWarningString(resources.getString(R.string.warning), resources.getString(R.string.warning_error)) + match.nextSetAnnounce(resources.getString(setStartAnnounce), resources.getString(R.string.and))
+            match.printWarningString(resources.getString(R.string.warning), resources.getString(R.string.warning_error)) +
+                    match.nextSetAnnounce(setEndAnnounce, resources.getString(R.string.and))
         if (match is DoubleMatch) {
             val winner = match.getSetWinner()
             val loser = match.getSetLoser()
@@ -288,10 +324,7 @@ class MatchActivity : AppCompatActivity() {
                     point_left.isVisible = true
                     point_right.isVisible = true
                     drawPlayerNamesAndPoints(match)
-                    announce.text = if (match.sets.size == 2)
-                        resources.getString(R.string.second_set_start)
-                    else
-                        resources.getString(R.string.third_set_start)
+                    announce.text = setStartAnnounce
                 } else {
                     announce.text = resources.getString(R.string.please_choose_serve_accept)
                 }
@@ -300,6 +333,9 @@ class MatchActivity : AppCompatActivity() {
             startTimerButtonCounter(match, Utils.BREAKTIMESETFINISHMILLIS)
 
             timer_button.setOnClickListener {
+                if (::countdown.isInitialized) {
+                    countdown.cancel()
+                }
                 startNext()
             }
 
@@ -347,10 +383,10 @@ class MatchActivity : AppCompatActivity() {
                 drawPlayerNamesAndPoints(match)
                 point_left.isVisible = true
                 point_right.isVisible = true
-                announce.text = if (match.sets.size == 2)
-                    resources.getString(R.string.second_set_start)
-                else
-                    resources.getString(R.string.third_set_start)
+                if (::countdown.isInitialized) {
+                    countdown.cancel()
+                }
+                announce.text = setStartAnnounce
             }
         }
     }
@@ -405,6 +441,12 @@ class MatchActivity : AppCompatActivity() {
         point_right.isClickable = false
         point_left.alpha = 0.5f
         point_right.alpha = 0.5f
+        new_match.isVisible = true
+        new_match.setOnClickListener {
+            val intent = Intent(this.applicationContext, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
+        }
     }
 
     private fun drawPlayerNamesAndPoints(match: Match) {
@@ -491,7 +533,6 @@ class MatchActivity : AppCompatActivity() {
 
 
 
-        //Create a new image bitmap and attach a brand new canvas to it
         //Create a new image bitmap and attach a brand new canvas to it
         val tempBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
         val tempCanvas = Canvas(tempBitmap)

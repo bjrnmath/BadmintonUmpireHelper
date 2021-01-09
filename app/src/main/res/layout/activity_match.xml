@@ -193,6 +193,17 @@
             android:layout_marginLeft="10dp" android:layout_marginStart="10dp"
     />
     <Button
+            android:text="@string/new_match"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp" android:id="@+id/new_match"
+            android:textSize="30sp" android:textStyle="bold"
+            android:background="#515151" android:textColor="#BCBCBC"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/court_top"
+            app:layout_constraintStart_toEndOf="@+id/undo" android:layout_marginStart="10dp"
+            android:visibility="invisible"/>
+    <Button
             android:text="@string/exceptional_event"
             android:layout_width="wrap_content"
             android:layout_height="0dp" android:id="@+id/incident"
@@ -217,9 +228,9 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="5dp" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
-            android:gravity="center" android:layout_marginLeft="50dp" android:layout_marginStart="50dp"
-            android:layout_marginRight="50dp" android:layout_marginEnd="50dp" android:textColor="#BCBCBC"
-            android:textSize="20sp"/>
+            android:gravity="center" android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp" android:textColor="#BCBCBC"
+            android:textSize="12sp"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/player_teamB_static"
@@ -227,8 +238,8 @@
             android:layout_marginTop="5dp"
             android:gravity="center"
             android:textColor="#BCBCBC"
-            android:textSize="20sp" app:layout_constraintStart_toEndOf="@+id/pointsLabel"
-            android:layout_marginLeft="30dp" android:layout_marginStart="30dp"/>
+            android:textSize="12sp" app:layout_constraintStart_toEndOf="@+id/pointsLabel"
+            android:layout_marginStart="30dp"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/player_teamA_static"
@@ -236,8 +247,8 @@
             android:layout_marginTop="5dp"
             android:gravity="center"
             android:textColor="#BCBCBC"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toStartOf="@+id/pointsLabel" android:layout_marginRight="30dp"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/pointsLabel"
             android:layout_marginEnd="30dp"/>
     <ImageView
             android:layout_width="0dp"
