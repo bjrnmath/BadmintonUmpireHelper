@@ -254,6 +254,7 @@ class MatchActivity : AppCompatActivity() {
         point_right.isVisible = true
         point_left.alpha = 1f
         point_right.alpha = 1f
+        new_match.isVisible = false
     }
 
     private fun delayButton(button: Button) {
