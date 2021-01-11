@@ -17,12 +17,12 @@ jobs:
         uses: reactivecircus/android-emulator-runner@v2.14.2
         with:
           api-level: 24
-          script: ./gradlew connectedCheck --stacktrace
+          script: gradle connectedCheck --stacktrace
 
   build:
 
     runs-on: ubuntu-18.04
-
+    needs: test
     steps:
     - uses: actions/checkout@v2
     - name: set up JDK 1.8
