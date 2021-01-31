@@ -124,7 +124,7 @@ class MatchActivity : AppCompatActivity() {
                         Incidents.DISQUALIFICATION,
                         Incidents.SURRENDER,
                         Incidents.INJURY -> {
-                            ArrayAdapter<String>(thisActivity, lout, match.playerTeamA + match.playerTeamB)
+                            ArrayAdapter(thisActivity, lout, match.playerTeamA + match.playerTeamB)
                                 .also { incident_details.adapter = it }
                             incident_details.isVisible = true
                         }

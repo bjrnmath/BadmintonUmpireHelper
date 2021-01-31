@@ -19,10 +19,10 @@ class SelectionTestDouble {
     var activityRule: ActivityScenarioRule<MainActivity>
             = ActivityScenarioRule(MainActivity::class.java)
 
-    val Player1String = "Alan"
-    val Player2String = "Berta"
-    val Player3String = "Charlie"
-    val Player4String = "Dan"
+    private val player1String = "Alan"
+    private val player2String = "Berta"
+    private val player3String = "Charlie"
+    private val player4String = "Dan"
 
     /**
      * Prepares the view for a double match.
@@ -31,10 +31,10 @@ class SelectionTestDouble {
     fun prepareSelectionField() {
         UtilityFunctions.clickElement(R.id.Switch_Single_Double)
 
-        UtilityFunctions.fillWithText(R.id.player1, Player1String)
-        UtilityFunctions.fillWithText(R.id.player2, Player2String)
-        UtilityFunctions.fillWithText(R.id.player3, Player3String)
-        UtilityFunctions.fillWithText(R.id.player4, Player4String)
+        UtilityFunctions.fillWithText(R.id.player1, player1String)
+        UtilityFunctions.fillWithText(R.id.player2, player2String)
+        UtilityFunctions.fillWithText(R.id.player3, player3String)
+        UtilityFunctions.fillWithText(R.id.player4, player4String)
 
         UtilityFunctions.clickElement(R.id.start_match)
 
@@ -51,15 +51,15 @@ class SelectionTestDouble {
     @Test
     fun checkInitialView() {
         // check if all text are visible as they should be
-        UtilityFunctions.hasText(R.id.vsHeader, "${Player1String}/${Player2String} vs. ${Player3String}/${Player4String}")
-        UtilityFunctions.hasText(R.id.serveTeamAPlayer1, Player1String)
-        UtilityFunctions.hasText(R.id.serveTeamAPlayer2, Player2String)
+        UtilityFunctions.hasText(R.id.vsHeader, "${player1String}/${player2String} vs. ${player3String}/${player4String}")
+        UtilityFunctions.hasText(R.id.serveTeamAPlayer1, player1String)
+        UtilityFunctions.hasText(R.id.serveTeamAPlayer2, player2String)
 
-        UtilityFunctions.hasText(R.id.serveTeamBPlayer1, Player3String)
-        UtilityFunctions.hasText(R.id.serveTeamBPlayer2, Player4String)
+        UtilityFunctions.hasText(R.id.serveTeamBPlayer1, player3String)
+        UtilityFunctions.hasText(R.id.serveTeamBPlayer2, player4String)
 
-        UtilityFunctions.hasText(R.id.teamASide, "${Player1String}/${Player2String}")
-        UtilityFunctions.hasText(R.id.teamBSide, "${Player3String}/${Player4String}")
+        UtilityFunctions.hasText(R.id.teamASide, "${player1String}/${player2String}")
+        UtilityFunctions.hasText(R.id.teamBSide, "${player3String}/${player4String}")
 
         // check if all buttons are there as they should be
         UtilityFunctions.isVisible(R.id.teamAPlayer1Serve)
@@ -450,32 +450,32 @@ class SelectionTestDouble {
 
         val chosenListA = listOf(
 
-            arrayOf<Any>(R.id.teamAPlayer1Serve, R.id.teamBPlayer1Accept, Player1String, Player3String, Player2String, Player4String),
-            arrayOf<Any>(R.id.teamAPlayer2Serve, R.id.teamBPlayer1Accept, Player2String, Player3String, Player1String, Player4String),
+            arrayOf<Any>(R.id.teamAPlayer1Serve, R.id.teamBPlayer1Accept, player1String, player3String, player2String, player4String),
+            arrayOf<Any>(R.id.teamAPlayer2Serve, R.id.teamBPlayer1Accept, player2String, player3String, player1String, player4String),
 
-            arrayOf<Any>(R.id.teamAPlayer1Serve, R.id.teamBPlayer2Accept, Player1String, Player4String, Player2String, Player3String),
-            arrayOf<Any>(R.id.teamAPlayer2Serve, R.id.teamBPlayer2Accept, Player2String, Player4String, Player1String, Player3String),
+            arrayOf<Any>(R.id.teamAPlayer1Serve, R.id.teamBPlayer2Accept, player1String, player4String, player2String, player3String),
+            arrayOf<Any>(R.id.teamAPlayer2Serve, R.id.teamBPlayer2Accept, player2String, player4String, player1String, player3String),
 
-            arrayOf<Any>(R.id.teamAPlayer1Accept, R.id.teamBPlayer1Serve, Player1String, Player3String, Player2String, Player4String),
-            arrayOf<Any>(R.id.teamAPlayer2Accept, R.id.teamBPlayer1Serve, Player2String, Player3String, Player1String, Player4String),
+            arrayOf<Any>(R.id.teamAPlayer1Accept, R.id.teamBPlayer1Serve, player1String, player3String, player2String, player4String),
+            arrayOf<Any>(R.id.teamAPlayer2Accept, R.id.teamBPlayer1Serve, player2String, player3String, player1String, player4String),
 
-            arrayOf<Any>(R.id.teamAPlayer1Accept, R.id.teamBPlayer2Serve, Player1String, Player4String, Player2String, Player3String),
-            arrayOf<Any>(R.id.teamAPlayer2Accept, R.id.teamBPlayer2Serve, Player2String, Player4String, Player1String, Player3String),
+            arrayOf<Any>(R.id.teamAPlayer1Accept, R.id.teamBPlayer2Serve, player1String, player4String, player2String, player3String),
+            arrayOf<Any>(R.id.teamAPlayer2Accept, R.id.teamBPlayer2Serve, player2String, player4String, player1String, player3String),
         )
 
         val chosenListB = listOf(
-            arrayOf<Any>(R.id.teamBPlayer1Serve, R.id.teamAPlayer1Accept, Player3String, Player1String, Player4String, Player2String),
-            arrayOf<Any>(R.id.teamBPlayer2Serve, R.id.teamAPlayer1Accept, Player4String, Player1String, Player3String, Player2String),
+            arrayOf<Any>(R.id.teamBPlayer1Serve, R.id.teamAPlayer1Accept, player3String, player1String, player4String, player2String),
+            arrayOf<Any>(R.id.teamBPlayer2Serve, R.id.teamAPlayer1Accept, player4String, player1String, player3String, player2String),
 
-            arrayOf<Any>(R.id.teamBPlayer1Serve, R.id.teamAPlayer2Accept, Player3String, Player2String, Player4String, Player1String),
-            arrayOf<Any>(R.id.teamBPlayer2Serve, R.id.teamAPlayer2Accept, Player4String, Player2String, Player3String, Player1String),
+            arrayOf<Any>(R.id.teamBPlayer1Serve, R.id.teamAPlayer2Accept, player3String, player2String, player4String, player1String),
+            arrayOf<Any>(R.id.teamBPlayer2Serve, R.id.teamAPlayer2Accept, player4String, player2String, player3String, player1String),
 
 
-            arrayOf<Any>(R.id.teamBPlayer1Accept, R.id.teamAPlayer1Serve, Player3String, Player1String, Player4String, Player2String),
-            arrayOf<Any>(R.id.teamBPlayer2Accept, R.id.teamAPlayer1Serve, Player4String, Player1String, Player3String, Player2String),
+            arrayOf<Any>(R.id.teamBPlayer1Accept, R.id.teamAPlayer1Serve, player3String, player1String, player4String, player2String),
+            arrayOf<Any>(R.id.teamBPlayer2Accept, R.id.teamAPlayer1Serve, player4String, player1String, player3String, player2String),
 
-            arrayOf<Any>(R.id.teamBPlayer1Accept, R.id.teamAPlayer2Serve, Player3String, Player2String, Player4String, Player1String),
-            arrayOf<Any>(R.id.teamBPlayer2Accept, R.id.teamAPlayer2Serve, Player4String, Player2String, Player3String, Player1String),
+            arrayOf<Any>(R.id.teamBPlayer1Accept, R.id.teamAPlayer2Serve, player3String, player2String, player4String, player1String),
+            arrayOf<Any>(R.id.teamBPlayer2Accept, R.id.teamAPlayer2Serve, player4String, player2String, player3String, player1String),
         )
 
         // go over all possible choice combinations and then check if side left was chosen by team B

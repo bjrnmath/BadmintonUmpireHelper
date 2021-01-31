@@ -20,8 +20,8 @@ abstract class Match(
     val playerTeamA: List<String>,
     val playerTeamB: List<String>,
     val teamMatch: Boolean,
-    val teamAName: String,
-    val teamBName: String
+    private val teamAName: String,
+    private val teamBName: String
 
 ): Serializable {
     var sets = mutableListOf<MatchSet>()
@@ -215,7 +215,7 @@ abstract class Match(
         }
     }
 
-    fun printWinWording(string: String, and: String): CharSequence? {
+    fun printWinWording(string: String, and: String): CharSequence {
         val winnerA = isWinnerA()
         val winnerTeam = printWinnerTeamPretty(winnerA, and)
         val points = sets.joinToString(", ") {
@@ -246,7 +246,7 @@ abstract class Match(
             else
                 printTeamBPretty(and)
 
-    fun nextSetAnnounce(nextSetAnnounce: String, and: String): CharSequence? {
+    fun nextSetAnnounce(nextSetAnnounce: String, and: String): CharSequence {
         val winnerA = isWinnerA(currentSet())
         return nextSetAnnounce.format(
             printWinnerTeamPretty(winnerA, and),

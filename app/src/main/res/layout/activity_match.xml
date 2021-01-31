@@ -153,14 +153,14 @@
             app:layout_constraintStart_toEndOf="@+id/net" android:layout_marginLeft="80dp"
             android:layout_marginStart="80dp"/>
     <TextView
-            android:text="TextView"
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/player_left_uneven"
             app:layout_constraintStart_toEndOf="@+id/court_left2" app:layout_constraintTop_toBottomOf="@+id/court_top2"
             app:layout_constraintBottom_toTopOf="@+id/court_left_center" android:layout_marginLeft="10dp"
             android:layout_marginStart="10dp" android:textColor="#BCBCBC" android:textSize="20sp"/>
     <TextView
-            android:text="TextView"
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/player_right_even"
             app:layout_constraintTop_toBottomOf="@+id/court_top2"
@@ -169,7 +169,7 @@
             android:layout_marginRight="10dp" android:layout_marginEnd="10dp" android:textColor="#BCBCBC"
             android:textSize="20sp"/>
     <TextView
-            android:text="TextView"
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/player_right_uneven"
             app:layout_constraintEnd_toStartOf="@+id/court_right2"
@@ -177,7 +177,7 @@
             app:layout_constraintBottom_toTopOf="@+id/court_bottom2" android:layout_marginRight="10dp"
             android:layout_marginEnd="10dp" android:textColor="#BCBCBC" android:textSize="20sp"/>
     <TextView
-            android:text="TextView"
+            android:text=""
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/player_left_even"
             app:layout_constraintStart_toEndOf="@+id/court_left2"

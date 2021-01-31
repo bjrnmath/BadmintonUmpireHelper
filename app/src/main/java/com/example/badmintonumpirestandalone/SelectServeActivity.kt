@@ -1,14 +1,11 @@
 package com.example.badmintonumpirestandalone
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKey
 import com.example.badmintonumpirestandalone.model.*
 import kotlinx.android.synthetic.main.activity_serve.*
 import java.util.*

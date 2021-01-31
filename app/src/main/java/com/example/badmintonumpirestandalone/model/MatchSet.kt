@@ -1,11 +1,6 @@
 package com.example.badmintonumpirestandalone.model
 
-import android.widget.ArrayAdapter
-import androidx.core.view.isVisible
-import com.example.badmintonumpirestandalone.R
-import kotlinx.android.synthetic.main.activity_match.*
 import java.io.Serializable
-import java.lang.StringBuilder
 import kotlin.math.abs
 
 data class SetPoint(val pointA: Int, val pointB: Int, val serve: PlayerIDs, val accept: PlayerIDs): Serializable {
