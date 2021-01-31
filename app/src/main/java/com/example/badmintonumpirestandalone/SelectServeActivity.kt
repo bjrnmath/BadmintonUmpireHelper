@@ -313,6 +313,7 @@ class SelectServeActivity : AppCompatActivity() {
         status_header.text = serveText
 
         if (serve != PlayerIDs.UNDEF && accept != PlayerIDs.UNDEF && sideTeamA != Side.UNDEF) {
+            match.sets.clear() // make sure no other set is in there, might happen if one finished selection of players and side and then did an undo
             match.sets.add(
                 MatchSet(match, serve, accept, sideTeamA == Side.RIGHT)
             )
