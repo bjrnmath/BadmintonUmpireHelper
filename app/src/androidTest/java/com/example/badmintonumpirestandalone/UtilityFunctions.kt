@@ -3,11 +3,12 @@ package com.example.badmintonumpirestandalone
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.*
+import org.hamcrest.CoreMatchers.containsString
 import org.hamcrest.CoreMatchers.not
 
 class UtilityFunctions {
@@ -23,6 +24,14 @@ class UtilityFunctions {
 
         fun clickElement(id: Int) {
             onView(withId(id)).perform(click())
+        }
+
+        fun fillWithText(id: Int, newText: String) {
+            onView(withId(id)).perform(replaceText(newText))
+        }
+
+        fun hasText(id: Int, text: String) {
+            onView(withId(id)).check(matches(withText(text)))
         }
     }
 }
